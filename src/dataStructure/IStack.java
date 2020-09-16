@@ -2,10 +2,11 @@ package dataStructure;
 
 public interface IStack<E> {
 	
-	public void push(Node<E> newE);
+	public void push(E newE);
 	public boolean isEmpty();
-	public Node<E> top();
-	public Node<E> pop();
+	public E top();
+	public E pop();
+	public void clear();
 	public int size();
 	
 }

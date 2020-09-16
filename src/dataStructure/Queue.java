@@ -2,56 +2,57 @@ package dataStructure;
 
 public class Queue<E> implements IQueue<E>{
 	
-	private Node<E> top;
-	private Node<E> bottom;
+	private Node<E> front;
+	private Node<E> back;
 	
 	public Queue() {
-		setTop(null);
-		bottom = null;
+		front = null;
+		back = null;
 	}
 
 	@Override
-	public void offer(Node<E> newE) {
-		if (bottom != null) {
-			bottom.setNext(newE);
-			newE.setPrev(bottom);
+	public void offer(E newEl) { //agrega de ultimo
+		Node<E> newE = new Node<E>(newEl);
+		if (back != null) {
+			back.setNext(newE);
+			newE.setPrev(back);
 		} else {
-			setTop(newE);
+			setFront(newE);
 		}
-		bottom = newE;
+		back = newE;
 	}
 
 	@Override
 	public boolean isEmpty() {
 		boolean isEmpty = false;
-		if (top == null) {
+		if (front == null) {
 			isEmpty = true;
 		}
 		return isEmpty;
 	}
 
 	@Override
-	public Node<E> peek() {
-		return top;
+	public E peek() { // coge el primero
+		return front.getValue();
 	}
 
 	@Override
-	public Node<E> poll() {
-		Node<E> first = top;
+	public E poll() { // Elimina y toma el primero
+		Node<E> first = front;
 		if (first != null) {
-			Node<E> second = top.getNext();
+			Node<E> second = front.getNext();
 			if (second != null) {
 				second.setPrev(null);
 			}
-			top = second;
+			front = second;
 		}
-		return first;
+		return first.getValue();
 	}
 
 	@Override
 	public int size() {
 		int size = 0;
-		Node<E> current = top;
+		Node<E> current = front;
 		while (current != null) {
 			size++;
 			current = current.getNext();
@@ -61,36 +62,26 @@ public class Queue<E> implements IQueue<E>{
 	
 	@Override
 	public void clear() {
-		setTop(null);
-		setBottom(null);
+		front = null;
+		back = null;
 	}
 	
-	/**
-	 * @return the top
-	 */
-	public Node<E> getTop() {
-		return top;
-	}
+	
 
 	/**
-	 * @param top the top to set
+	 * @param front the front to set
 	 */
-	public void setTop(Node<E> top) {
-		this.top = top;
+	private void setFront(Node<E> front) {
+		this.front = front;
 	}
 
-	/**
-	 * @return the bottom
-	 */
-	public Node<E> getBottom() {
-		return bottom;
-	}
+	
 
 	/**
-	 * @param bottom the bottom to set
+	 * @param back the back to set
 	 */
-	public void setBottom(Node<E> bottom) {
-		this.bottom = bottom;
+	private void setback(Node<E> back) {
+		this.back = back;
 	}	
 	
 }

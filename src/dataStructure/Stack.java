@@ -5,12 +5,13 @@ public class Stack<E> implements IStack<E>{
 	private Node<E> top;
 	
 	@Override
-	public void push(Node<E> newE) {
+	public void push(E newE) {
+		Node<E> newEl = new Node<E>(newE);
 		if (top != null) {
-			newE.setNext(top);
-			top.setPrev(newE);
+			newEl.setNext(top);
+			top.setPrev(newEl);
 		}
-		setTop(newE);
+		setTop(newEl);
 	}
 
 	@Override
@@ -26,12 +27,12 @@ public class Stack<E> implements IStack<E>{
 	 * @return the top
 	 */
 	@Override
-	public Node<E> top() {
-		return top;
+	public E top() {
+		return top.getValue();
 	}
 
 	@Override
-	public Node<E> pop() {
+	public E pop() { //
 		Node<E> first = top;
 		if (first != null) {
 			Node<E> second = first.getNext();
@@ -40,7 +41,7 @@ public class Stack<E> implements IStack<E>{
 			}
 			setTop(second);
 		}
-		return first;
+		return first.getValue();
 	}
 
 	@Override
@@ -57,8 +58,14 @@ public class Stack<E> implements IStack<E>{
 	/**
 	 * @param top the top to set
 	 */
-	public void setTop(Node<E> top) {
+	private void setTop(Node<E> top) {
 		this.top = top;
+	}
+
+	@Override
+	public void clear() {
+		top = null;
+		
 	}
 
 }
