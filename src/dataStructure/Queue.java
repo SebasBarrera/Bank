@@ -33,20 +33,25 @@ public class Queue<E> implements IQueue<E>{
 
 	@Override
 	public E peek() { // coge el primero
-		return front.getValue();
+		E value = null;
+		if (front != null) {
+			value = front.getValue();
+		}
+		return value;
 	}
 
 	@Override
 	public E poll() { // Elimina y toma el primero
-		Node<E> first = front;
-		if (first != null) {
+		E value = null;
+		if (front != null) {
+			value = front.getValue();
 			Node<E> second = front.getNext();
 			if (second != null) {
 				second.setPrev(null);
 			}
 			front = second;
 		}
-		return first.getValue();
+		return value;
 	}
 
 	@Override
@@ -75,11 +80,17 @@ public class Queue<E> implements IQueue<E>{
 		this.front = front;
 	}
 
-	
+	/**
+	 * @return the back
+	 */
+	public Node<E> getBack() {
+		return back;
+	}
 
 	/**
 	 * @param back the back to set
 	 */
+	@SuppressWarnings("unused")
 	private void setback(Node<E> back) {
 		this.back = back;
 	}	

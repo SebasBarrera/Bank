@@ -8,5 +8,4 @@ public interface IStack<E> {
 	public E pop();
 	public void clear();
 	public int size();
-	
 }

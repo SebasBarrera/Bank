@@ -24,24 +24,29 @@ public class Stack<E> implements IStack<E>{
 	}
 
 	/**
-	 * @return the top
+	 * @return the top value
 	 */
 	@Override
 	public E top() {
-		return top.getValue();
+		E value = null;
+		if (top != null) {
+			value = top.getValue();
+		}
+		return value;
 	}
 
 	@Override
-	public E pop() { //
-		Node<E> first = top;
-		if (first != null) {
-			Node<E> second = first.getNext();
+	public E pop() {
+		E value = null;
+		if (top != null) {
+			value = top.getValue();
+			Node<E> second = top.getNext();
 			if (second != null) {
 				second.setPrev(null);
 			}
 			setTop(second);
 		}
-		return first.getValue();
+		return value;
 	}
 
 	@Override

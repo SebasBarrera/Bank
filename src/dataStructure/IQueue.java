@@ -7,6 +7,5 @@ public interface IQueue<E> {
 	public E peek();
 	public E poll();
 	public void clear();
-	public int size();
-	
+	public int size();	
 }
