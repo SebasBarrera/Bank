@@ -31,8 +31,8 @@ class QueueTest {
 		setupStage0();
 		int testValue = 9643;
 		queue.offer(new Node<>(testValue).getValue());
-		assertEquals(queue.peek(), testValue);
-		assertEquals(queue.getBack().getValue(), testValue);
+		assertEquals(queue.peek(), testValue, "The value offer is not in the front");
+		assertEquals(queue.getBack().getValue(), testValue, "The value offer is not in the back");
 	}
 	
 	@Test
@@ -40,7 +40,7 @@ class QueueTest {
 		setupStage1();
 		int testValue = 4707543;
 		queue.offer(new Node<>(testValue).getValue());
-		assertEquals(queue.getBack().getValue(), testValue);
+		assertEquals(queue.getBack().getValue(), testValue, "The value offer is not in the back");
 	}
 	
 	@Test
@@ -48,7 +48,7 @@ class QueueTest {
 		setupStage2();
 		int testValue = 2359926;
 		queue.offer(new Node<>(testValue).getValue());
-		assertEquals(queue.getBack().getValue(), testValue);
+		assertEquals(queue.getBack().getValue(), testValue, "The value offer is not in the back");
 	}
 	
 	@Test

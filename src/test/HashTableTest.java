@@ -20,7 +20,7 @@ class HashTableTest {
 		node = hashTable.getNodes();
 		hashTable.insert(1, 4);
 	}
-	
+
 /*	TODO
  * private void setupStage2() {
 		setupStage1();

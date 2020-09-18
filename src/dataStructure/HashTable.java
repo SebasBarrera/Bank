@@ -21,7 +21,7 @@ public class HashTable<K, V> implements IHashTable<K, V>{
 	
 	public int hashFunction(K key) {
 		return (key.hashCode() & 0x7fffffff) % ARRAY_SIZE;
-	}
+	}//the & 0x7fffffff is a efiecient form for get the absolut value of the hashCode
 	
 	@Override
 	public void insert(K key, V value) {
@@ -82,6 +82,6 @@ public class HashTable<K, V> implements IHashTable<K, V>{
 			current = current.getNext();
 		}
 		return value;
-	}	
+	}
 
 }

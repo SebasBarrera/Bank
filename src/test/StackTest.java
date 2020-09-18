@@ -31,7 +31,7 @@ class StackTest {
 		setupStage0();
 		int testValue = 75343;
 		stack.push(new Node<>(testValue).getValue());
-		assertEquals(stack.top(), testValue);
+		assertEquals(stack.top(), testValue, "The value pushed is not on the top");
 	}
 	
 	@Test
@@ -39,7 +39,7 @@ class StackTest {
 		setupStage1();
 		int testValue = 582935;
 		stack.push(new Node<>(testValue).getValue());
-		assertEquals(stack.top(), testValue);
+		assertEquals(stack.top(), testValue, "The value pushed is not on the top");
 	}
 	
 	@Test
@@ -47,7 +47,7 @@ class StackTest {
 		setupStage2();
 		int testValue = 2359926;
 		stack.push(new Node<>(testValue).getValue());
-		assertEquals(stack.top(), testValue);
+		assertEquals(stack.top(), testValue, "The value pushed is not on the top");
 	}
 	
 	@Test
