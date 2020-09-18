@@ -20,7 +20,7 @@ public class HashTable<K, V> implements IHashTable<K, V>{
 	}
 	
 	public int hashFunction(K key) {
-		return key.hashCode() % ARRAY_SIZE;
+		return (key.hashCode() & 0x7fffffff) % ARRAY_SIZE;
 	}
 	
 	@Override
@@ -70,7 +70,7 @@ public class HashTable<K, V> implements IHashTable<K, V>{
 	}
 
 	@Override
-	public V getValue(K key) {
+	public V search(K key) {
 		NodeH<K, V> current = nodes[hashFunction(key)];
 		V value = null;
 		boolean found = false;
@@ -82,11 +82,6 @@ public class HashTable<K, V> implements IHashTable<K, V>{
 			current = current.getNext();
 		}
 		return value;
-	}
-
-	@Override
-	public V search(K key) {
-		return getValue(key);
 	}	
 
 }
