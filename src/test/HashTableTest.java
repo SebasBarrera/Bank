@@ -2,34 +2,38 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import dataStructure.Node;
-import dataStructure.Queue;
+import dataStructure.NodeH;
+import dataStructure.HashTable;
 
-class QueueTest {
+class HashTableTest {
 
-	private Queue<Integer> queue;
+	private HashTable<Integer, Integer> hashTable;
+	private NodeH<Integer, Integer>[] node;
+	
 	
 	private void setupStage0() {
-		queue = new Queue<>();
+		hashTable = new HashTable<>();
 	}
 	
 	private void setupStage1() {
 		setupStage0();
-		Node<Integer> n1 = new Node<>(67);
-		queue.offer(n1.getValue());
+		node = hashTable.getNodes();
+		hashTable.insert(1, 4);
 	}
-	private void setupStage2() {
+	
+/*	TODO
+ * private void setupStage2() {
 		setupStage1();
-		Node<Integer> n2 = new Node<>(1287643);
+		Node<Integer> n2 = new Node<>(99472);
 		queue.offer(n2.getValue());
-		Node<Integer> n3 = new Node<>(836763);
+		Node<Integer> n3 = new Node<>(4272942);
 		queue.offer(n3.getValue());
 	}
 	
 	@Test
 	void testOffer0() {
 		setupStage0();
-		int testValue = 9643;
+		int testValue = 75343;
 		queue.offer(new Node<>(testValue).getValue());
 		assertEquals(queue.peek(), testValue);
 		assertEquals(queue.getBack().getValue(), testValue);
@@ -38,7 +42,7 @@ class QueueTest {
 	@Test
 	void testOffer1() {
 		setupStage1();
-		int testValue = 4707543;
+		int testValue = 582935;
 		queue.offer(new Node<>(testValue).getValue());
 		assertEquals(queue.getBack().getValue(), testValue);
 	}
@@ -69,7 +73,7 @@ class QueueTest {
 	void testPoll2() {
 		setupStage2();
 		queue.poll();
-		assertEquals(queue.peek(), 1287643, "The value retorned is not the expected");
+		assertEquals(queue.peek(), 99472, "The value retorned is not the expected");
 	}
 	
 	@Test
@@ -99,13 +103,13 @@ class QueueTest {
 	@Test
 	void testPeek1() {
 		setupStage1();
-		assertEquals(queue.peek(), 67, "The value retorned is not the expected");
+		assertEquals(queue.peek(), 532, "The value retorned is not the expected");
 	}
 	
 	@Test
 	void testPeek2() {
 		setupStage2();
-		assertEquals(queue.peek(), 67, "The value retorned is not the expected");
+		assertEquals(queue.peek(), 532, "The value retorned is not the expected");
 	}
 	
 	@Test
@@ -145,5 +149,5 @@ class QueueTest {
 		setupStage2();
 		queue.clear();
 		assertTrue(queue.isEmpty(), "The queue is not empty");
-	}
+	}*/
 }
