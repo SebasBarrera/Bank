@@ -8,6 +8,8 @@ public class Card {
 	private Date paymentDate;
 	private int cvc;
 	private String dueDate;
+	private int cuotas;
+	private int cupo; 
 	
 	/**
 	 * @param number
@@ -15,7 +17,7 @@ public class Card {
 	 * @param cvc
 	 * @param dueDate
 	 */
-	public Card(long number, Date paymentDate, int cvc, String dueDate) {
+	public Card(long number, Date paymentDate, int cvc, String dueDate, int cuotas, int cupo) {
 		super();
 		this.number = number;
 		this.paymentDate = paymentDate;
