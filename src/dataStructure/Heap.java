@@ -116,7 +116,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 		this.elements = elements;
 	}
 
-	//Implementación de la priority queue
+	//Implementaciï¿½n de la priority queue
 	
 	
 	@Override
@@ -149,7 +149,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 	public void priorityInsert(int key) {
 		
 		heapSize = heapSize + 1;
-		elements[heapSize] = Integer.MIN_VALUE; //por qué!!!
+		elements[heapSize] = Integer.MIN_VALUE; //por quï¿½!!!
 		increaseKey(heapSize, key);
 		
 	}
