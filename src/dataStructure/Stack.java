@@ -5,7 +5,7 @@ public class Stack<E> implements IStack<E>{
 	private Node<E> top;
 	
 	@Override
-	public void push(E newE) {
+	public void push(E newE) { //apilar
 		Node<E> newEl = new Node<E>(newE);
 		if (top != null) {
 			newEl.setNext(top);
@@ -36,7 +36,7 @@ public class Stack<E> implements IStack<E>{
 	}
 
 	@Override
-	public E pop() {
+	public E pop() { //desapilar
 		E value = null;
 		if (top != null) {
 			value = top.getValue();
@@ -48,7 +48,7 @@ public class Stack<E> implements IStack<E>{
 		}
 		return value;
 	}
-
+	
 	@Override
 	public int size() {
 		int size = 0;

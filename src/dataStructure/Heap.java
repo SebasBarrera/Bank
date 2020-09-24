@@ -1,6 +1,6 @@
 package dataStructure;
 
-public class Heap<E extends Comparable<E>> implements IHeap<E> {
+public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 
 	private int arraysize;
 	private int heapSize;
@@ -16,7 +16,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E> {
 		this.arraysize = arraysize;
 		this.heapSize = heapSize;
 	}
-
+	
 	@Override
 	public void buildMaxHeap() {
 		heapSize = arraysize;
@@ -69,6 +69,10 @@ public class Heap<E extends Comparable<E>> implements IHeap<E> {
 	public int left(int i) {
 		return 2*i;
 	}
+	@Override
+	public int parent(int i) {
+		return 2/i;
+	}
 
 	/**
 	 * @return the arraysize
@@ -110,6 +114,44 @@ public class Heap<E extends Comparable<E>> implements IHeap<E> {
 	 */
 	public void setElements(E[] elements) {
 		this.elements = elements;
+	}
+
+	//Implementación de la priority queue
+	
+	
+	@Override
+	public E extractMaxheap() {
+		
+		if(heapSize < 1) {
+			//exception
+		}else {
+			Heap<E> max = (Heap<E>) elements[1];
+			//elements[1] =
+			//heapify
+			
+		}
+		return null;
+	}
+
+	@Override
+	public void increaseKey(int i, int key) {
+		if(key > elements[i]) {
+			//exception
+		}
+		elements[i] = key;
+		while( i > 1 && parent(i) < elements[i]) {
+				//swap
+			i = parent(i);
+		}
+	}
+
+	@Override
+	public void priorityInsert(int key) {
+		
+		heapSize = heapSize + 1;
+		elements[heapSize] = Integer.MIN_VALUE; //por qué!!!
+		increaseKey(heapSize, key);
+		
 	}
 	
 	
