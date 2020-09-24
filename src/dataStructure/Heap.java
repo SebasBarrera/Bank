@@ -44,6 +44,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 			E tmp = elements[i];
 			elements[i] = elements[largest];
 			elements[largest] = tmp;
+			swapKeys(i, largest);
 			maxHeapify(largest);
 		}
 	}
@@ -56,6 +57,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 			E tmp = elements[0];
 			elements[0] = elements[i];
 			elements[i] = tmp;
+			swapKeys(0, i);
 			heapSize--;
 			maxHeapify(i);
 		}
@@ -145,6 +147,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 			elements[i] = elements[parent(i)];
 			elements[parent(i)] = tmp;
 			i = parent(i);
+			swapKeys(i, parent(i));
 		}
 	}
 	
@@ -165,6 +168,10 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 		
 	}
 	
-	
+	public void swapKeys(int i, int j) {
+		int tmp = keys[i];
+		keys[i] = keys[j];
+		keys[j] = tmp;
+	}
 
 }
