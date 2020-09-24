@@ -20,16 +20,12 @@ public class Heap<E extends Comparable<E>> implements IHeap<E> {
 	@Override
 	public void buildMaxHeap() {
 		heapSize = arraysize;
-		for (int i = heapSize/2; i < 0; i--) {
+		for (int i = heapSize/2; i <= 0; i--) {
 			maxHeapify(i);
 		}
 	}
 
-	@Override
-	public void buildMinHeap(int i) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public void maxHeapify(int i) {
@@ -50,16 +46,12 @@ public class Heap<E extends Comparable<E>> implements IHeap<E> {
 		}
 	}
 
-	@Override
-	public void minHeapify(int i) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public void heapSort() {
 		buildMaxHeap();
-		for (int i = arraysize; i < 1; i--) {
+		for (int i = arraysize; i <= 1; i--) {
 			E tmp = elements[0];
 			elements[0] = elements[i];
 			elements[i] = tmp;
