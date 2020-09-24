@@ -5,6 +5,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 	private int arraysize;
 	private int heapSize;
 	private E[] elements;
+	private int[] keys;
 	
 	/**
 	 * @param arraysize
@@ -13,8 +14,9 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 	@SuppressWarnings("unchecked")
 	public Heap(int arraysize, int heapSize) {
 		elements = (E[]) new Comparable[arraysize];
+		keys = new int[arraysize];
 		this.arraysize = arraysize;
-		this.heapSize = heapSize;
+		this.heapSize = heapSize;		
 	}
 	
 	@Override
@@ -45,7 +47,6 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 			maxHeapify(largest);
 		}
 	}
-
 
 
 	@Override
@@ -116,40 +117,50 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 		this.elements = elements;
 	}
 
+	
 	//Implementaci�n de la priority queue
 	
 	
 	@Override
 	public E extractMaxheap() {
-		
+		E max = null;
 		if(heapSize < 1) {
 			//exception
 		}else {
-			Heap<E> max = (Heap<E>) elements[1];
-			//elements[1] =
-			//heapify
-			
+			max = elements[0];
+			elements[0] = elements[heapSize];
+			maxHeapify(0);
 		}
-		return null;
+		return max;
 	}
 
 	@Override
 	public void increaseKey(int i, int key) {
-		if(key > elements[i]) {
-			//exception
+		if (key < keys[i]) {
+			// exception
 		}
-		elements[i] = key;
-		while( i > 1 && parent(i) < elements[i]) {
-				//swap
+		keys[i] = key;
+		while (i > 0 && (elements[parent(i)].compareTo(elements[i]) < 0)) {
+			E tmp = elements[i];
+			elements[i] = elements[parent(i)];
+			elements[parent(i)] = tmp;
 			i = parent(i);
 		}
+	}
+	
+	public void decreaseKey(int i, int key) {
+		if(key > keys[i]) {
+			//exception
+		}
+		keys[i] = key;
+		maxHeapify(i);
 	}
 
 	@Override
 	public void priorityInsert(int key) {
-		
-		heapSize = heapSize + 1;
-		elements[heapSize] = Integer.MIN_VALUE; //por qu�!!!
+
+		heapSize++;
+		//elements[heapSize] = Integer.MIN_VALUE;
 		increaseKey(heapSize, key);
 		
 	}
