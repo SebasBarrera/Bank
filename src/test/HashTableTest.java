@@ -2,14 +2,11 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import dataStructure.NodeH;
 import dataStructure.HashTable;
 
 class HashTableTest {
 
 	private HashTable<Integer, Integer> hashTable;
-	private NodeH<Integer, Integer>[] node;
-	
 	
 	private void setupStage0() {
 		hashTable = new HashTable<>();
@@ -17,137 +14,83 @@ class HashTableTest {
 	
 	private void setupStage1() {
 		setupStage0();
-		node = hashTable.getNodes();
-		hashTable.insert(1, 4);
+		hashTable.insert(82, -4134);
 	}
 
-/*	TODO
- * private void setupStage2() {
+	private void setupStage2() {
 		setupStage1();
-		Node<Integer> n2 = new Node<>(99472);
-		queue.offer(n2.getValue());
-		Node<Integer> n3 = new Node<>(4272942);
-		queue.offer(n3.getValue());
+		hashTable.insert(-91354, 137);
+		hashTable.insert(0, 724520);
+		hashTable.insert(-1820, 7);
 	}
 	
 	@Test
-	void testOffer0() {
+	void testInsert0() {
 		setupStage0();
 		int testValue = 75343;
-		queue.offer(new Node<>(testValue).getValue());
-		assertEquals(queue.peek(), testValue);
-		assertEquals(queue.getBack().getValue(), testValue);
+		int testValue2 = 63436;
+		hashTable.insert(testValue, testValue2);
+		assertEquals(hashTable.search(testValue), testValue2, "The hash table is not inserting in the correct way");
 	}
 	
 	@Test
-	void testOffer1() {
+	void testInsert1() {
 		setupStage1();
-		int testValue = 582935;
-		queue.offer(new Node<>(testValue).getValue());
-		assertEquals(queue.getBack().getValue(), testValue);
+		int testValue = 953;
+		int testValue2 = 23536;
+		hashTable.insert(testValue, testValue2);
+		assertEquals(hashTable.search(testValue), testValue2, "The hash table is not inserting in the correct way");
 	}
 	
 	@Test
-	void testOffer2() {
+	void testInsert2() {
 		setupStage2();
-		int testValue = 2359926;
-		queue.offer(new Node<>(testValue).getValue());
-		assertEquals(queue.getBack().getValue(), testValue);
+		int testValue = 450;
+		int testValue2 = 4235;
+		hashTable.insert(testValue, testValue2);
+		assertEquals(hashTable.search(testValue), testValue2, "The hash table is not inserting in the correct way");
 	}
 	
 	@Test
-	void testPoll0() {
+	void testDelete0() {
 		setupStage0();
-		queue.poll();
-		assertEquals(queue.peek(), null, "The queue is not empty");
+		int testValue = 2957;
+		hashTable.delete(testValue);
+		assertEquals(hashTable.search(testValue), null, "The hashTable is not deleting, it should'nt have nodes");
 	}
 	
 	@Test
-	void testPoll1() {
+	void testDelete1() {
 		setupStage1();
-		queue.poll();
-		assertEquals(queue.peek(), null, "The queue is not empty");
+		assertEquals(hashTable.search(82), -4134);
+		hashTable.delete(82);
+		assertEquals(hashTable.search(82), null, "The hashTable is not deleting as well, the -4134 still here");
 	}
 	
 	@Test
-	void testPoll2() {
+	void testDelete2() {
 		setupStage2();
-		queue.poll();
-		assertEquals(queue.peek(), 99472, "The value retorned is not the expected");
+		assertEquals(hashTable.search(-1820), 7);
+		hashTable.delete(-1820);
+		assertEquals(hashTable.search(-1820), null, "The hashTable is not deleting, the value 7 still here");
 	}
 	
 	@Test
-	void testIsEmpty0() {
+	void testSearch0() {
 		setupStage0();
-		assertTrue(queue.isEmpty(), "The queue is not empty");
+		assertEquals(hashTable.search(42), null, "The hashTable is not searching as well");
 	}
 	
 	@Test
-	void testIsEmpty1() {
+	void testSearch1() {
 		setupStage1();
-		assertFalse(queue.isEmpty(), "The queue is empty");
+		assertEquals(hashTable.search(82), -4134, "The hashTable is not searching as well");
 	}
 	
 	@Test
-	void testIsEmpty2() {
+	void testSearch2() {
 		setupStage2();
-		assertFalse(queue.isEmpty(), "The queue is empty");
+		assertEquals(hashTable.search(0), 724520, "The hashTable is not searching as well");
 	}
 	
-	@Test
-	void testPeek0() {
-		setupStage0();
-		assertEquals(queue.peek(), null, "There is something in the queue");
-	}
-	
-	@Test
-	void testPeek1() {
-		setupStage1();
-		assertEquals(queue.peek(), 532, "The value retorned is not the expected");
-	}
-	
-	@Test
-	void testPeek2() {
-		setupStage2();
-		assertEquals(queue.peek(), 532, "The value retorned is not the expected");
-	}
-	
-	@Test
-	void testSize0() {
-		setupStage0();
-		assertEquals(queue.size(), 0, "There is something in the queue");
-	}
-	
-	@Test
-	void testSize1() {
-		setupStage1();
-		assertEquals(queue.size(), 1, "The size of the queue is not 1");
-	}
-	
-	@Test
-	void testSize2() {
-		setupStage2();
-		assertEquals(queue.size(), 3, "The size of the queue is not 1");
-	}
-	
-	@Test
-	void testClear0() {
-		setupStage0();
-		queue.clear();
-		assertTrue(queue.isEmpty(), "The queue is not empty");
-	}
-	
-	@Test
-	void testClear1() {
-		setupStage1();
-		queue.clear();
-		assertTrue(queue.isEmpty(), "The queue is not empty");
-	}
-	
-	@Test
-	void testClear2() {
-		setupStage2();
-		queue.clear();
-		assertTrue(queue.isEmpty(), "The queue is not empty");
-	}*/
 }

@@ -2,7 +2,7 @@ package dataStructure;
 
 public class HashTable<K, V> implements IHashTable<K, V>{
 	
-	public final static int ARRAY_SIZE = 997;
+	public final static int ARRAY_SIZE = 991;
 	 
 	private NodeH<K, V>[] nodes;
 	
