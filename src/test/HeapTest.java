@@ -15,7 +15,7 @@ class HeapTest {
 	}
 	
 	private void setupStage1() {
-		heap = new Heap<>(5,10);
+		heap = new Heap<>(10,5);
 		Integer[] testValues = {9 ,8 ,7, 6, 5, 4, 3, 2, 1, 0};
 		heap.setElements(testValues);
 	}
@@ -37,7 +37,14 @@ class HeapTest {
 	
 	
 	@Test
-	void testSize() {
+	void testHeapSort1() {
+		setupStage1();
+		heap.heapSort();
+		for (int i = 0; i < heap.getArraysize() - 1; i++) {
+			int j = i + 1;
+			assertTrue(heap.getElements()[j].compareTo(heap.getElements()[i]) >= 0, "");
+			
+		}
 		
 	}
 	

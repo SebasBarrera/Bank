@@ -4,6 +4,11 @@ import java.util.Date;
 
 public class Card {
 	
+	
+	//al agregar el usuario el ya viene con una deuda en la tarjeta definida, ya que en el transcurso del tiempo no podra aumentar esa deuda-hacer pagos con ella-
+	//funcionalidad usar tarjeta???
+	
+	
 	private long number;
 	private Date paymentDate;
 	private int cvc;
