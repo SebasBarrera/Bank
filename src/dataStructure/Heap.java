@@ -22,8 +22,8 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 	@Override
 	public void buildMaxHeap() {
 		heapSize = arraysize;
-		for (int i = heapSize/2; i <= 0; i--) {
-			maxHeapify(i);
+		for (int i = (heapSize/*-1*/)/2; i >= 1; i--) {
+			maxHeapify(i/*-1*/);
 		}
 	}
 
@@ -36,14 +36,11 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 		if (l <= heapSize && (elements[l].compareTo(elements[i]) > 0)) {
 			largest = l;
 		}
-		if (r <= heapSize && (elements[r].compareTo(elements[largest]) > 0)) {
+		if (r <= heapSize && (elements[r/*-1*/].compareTo(elements[largest]) > 0)) {
 			largest = r;
 		}
 		if (largest != i) {
-			E tmp = elements[i];
-			elements[i] = elements[largest];
-			elements[largest] = tmp;
-			swapKeys(i, largest);
+			swap(i, largest);
 			maxHeapify(largest);
 		}
 	}
@@ -51,11 +48,8 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 	@Override
 	public void heapSort() {
 		buildMaxHeap();
-		for (int i = arraysize; i <= 1; i--) {
-			E tmp = elements[0];
-			elements[0] = elements[i];
-			elements[i] = tmp;
-			swapKeys(0, i);
+		for (int i = arraysize - 1; i >= 1; i--) {
+			swap(0, i);
 			heapSize--;
 			maxHeapify(i);
 		}
@@ -63,16 +57,16 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 
 	@Override
 	public int right(int i) {
-		return (int) Math.floor(2*i+1);
+		return (int) Math.floor(2*i+1) -1;
 	}
 
 	@Override
 	public int left(int i) {
-		return (int) Math.floor(2*i);
+		return (int) Math.floor(2*i) -1;
 	}
 	@Override
 	public int parent(int i) {
-		return (int) Math.floor(2/i);
+		return (int) Math.floor(2/i) -1;
 	}
 
 	/**
@@ -113,9 +107,13 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 	/**
 	 * @param elements the elements to set
 	 */
-	public void setElements(E[] elements) {
-		this.elements = elements;
+	public void setElements(E[] n) {
+		for (int i = n.length+1; i > 0; i++) {
+			elements[i] = n[i+1];
+		}
+		
 	}
+	
 	public void setKeys(int[] keys) {
 		this.keys = keys;
 	}
@@ -147,7 +145,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 			elements[i] = elements[parent(i)];
 			elements[parent(i)] = tmp;
 			i = parent(i);
-			swapKeys(i, parent(i));
+			swap(i, parent(i));
 		}
 	}
 	
@@ -186,10 +184,14 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 		arraysize = newArraySize;
 	}
 	
-	public void swapKeys(int i, int j) {
-		int tmp = keys[i];
+	public void swap(int i, int j) {
+		E tmp = elements[i];
+		int tmpk = keys[i];
+		elements[i] = elements[j];
 		keys[i] = keys[j];
-		keys[j] = tmp;
+		elements[j] = tmp;
+		keys[j] = tmpk;
 	}
+
 
 }
