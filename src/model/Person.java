@@ -10,6 +10,7 @@ public class Person {
 	public long accountNumber;
 	public ArrayList<Card> cards;
 	public Date ingress;
+	private double totalDebt;
 	
 	/**
 	 * @param name
@@ -96,7 +97,18 @@ public class Person {
 	public void setIngress(Date ingress) {
 		this.ingress = ingress;
 	}
-	
+
+	public double getTotalDebt() {
+		return totalDebt;
+	}
+
+	public void setTotalDebt() {
+		double amount = 0;
+		for (int i = 0; i < cards.size(); i++) {
+			amount += cards.get(i).getDebt();
+		}
+		totalDebt = amount;
+	}
 	
 	/*
 	 * TODO

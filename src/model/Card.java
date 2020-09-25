@@ -13,8 +13,9 @@ public class Card {
 	private Date paymentDate;
 	private int cvc;
 	private String dueDate;
-	private int cuotas;
-	private int cupo; 
+	private int fees;
+	private int quota; 
+	private double debt;
 	
 	/**
 	 * @param number
@@ -22,12 +23,15 @@ public class Card {
 	 * @param cvc
 	 * @param dueDate
 	 */
-	public Card(long number, Date paymentDate, int cvc, String dueDate, int cuotas, int cupo) {
+	public Card(long number, Date paymentDate, int cvc, String dueDate, int fees, int quota, double debt) {
 		super();
 		this.number = number;
 		this.paymentDate = paymentDate;
 		this.cvc = cvc;
 		this.dueDate = dueDate;
+		this.fees = fees;
+		this.quota = quota;
+		this.debt = debt;
 	}
 
 	/**
@@ -85,5 +89,31 @@ public class Card {
 	public void setDueDate(String dueDate) {
 		this.dueDate = dueDate;
 	}
+
+	public int getFees() {
+		return fees;
+	}
+
+	public void setFees(int fees) {
+		this.fees = fees;
+	}
+
+	public int getQuota() {
+		return quota;
+	}
+
+	public void setQuota(int quota) {
+		this.quota = quota;
+	}
+
+	public double getDebt() {
+		return debt;
+	}
+
+	public void setDebt(double debt) {
+		this.debt = debt;
+	}
+	
+	
 	
 }

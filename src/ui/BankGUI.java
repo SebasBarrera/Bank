@@ -7,8 +7,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import model.Controller;
+import model.Person;
 
 public class BankGUI {
 	private Controller control;
@@ -16,6 +19,16 @@ public class BankGUI {
 	private AnchorPane clientInfo;
 	@FXML
 	private Label clientOptionsInfo;
+	@FXML
+    private TableView<Person> usersTable;
+    @FXML
+    private TableColumn<Person, String> nameColumn;
+    @FXML
+    private TableColumn<Person, String> idColumn;
+    @FXML
+    private TableColumn<Person, String> timeColumn;
+    @FXML
+    private TableColumn<Person, String> amountColumn;
 	
 	public BankGUI() {
 		control = new Controller();
