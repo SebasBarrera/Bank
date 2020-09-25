@@ -13,7 +13,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 	 */
 	@SuppressWarnings("unchecked")
 	public Heap(int arraysize, int heapSize) {
-		elements = (E[]) new Comparable[arraysize+1];
+		elements = (E[]) new Comparable[arraysize];
 		keys = new int[arraysize];
 		this.arraysize = arraysize;
 		this.heapSize = heapSize;		
