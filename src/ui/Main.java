@@ -19,13 +19,13 @@ private BankGUI bankGUI;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		//TODO FXMLLoader fxmll = new FXMLLoader(getClass().getResource("InitialScreen.fxml"));
-		//fxmll.setController(bankGUI);
-		//Parent root = fxmll.load();
+		FXMLLoader fxmll = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
+		fxmll.setController(bankGUI);
+		Parent root = fxmll.load();
 		//root.getStylesheets().add(getClass().getResource("styleFirstScreen.css").toExternalForm());
 		
-		//Scene scene = new Scene(root);
-		//primaryStage.setScene(scene);
+		Scene scene = new Scene(root);
+		primaryStage.setScene(scene);
 		primaryStage.setTitle("Bank Application");
 		//primaryStage.setResizable(false);
 		primaryStage.show();
