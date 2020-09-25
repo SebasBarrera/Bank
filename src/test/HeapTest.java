@@ -2,29 +2,53 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import dataStructure.HashTable;
+import dataStructure.Heap;
 
-class HashTableTest {
+class HeapTest {
 
-	private HashTable<Integer, Integer> hashTable;
+	private Heap<Integer> heap;
 	
 	private void setupStage0() {
-		hashTable = new HashTable<>();
+		heap = new Heap<>(3,3);
+		Integer[] testValues = {1 ,2 ,3};
+		heap.setElements(testValues);
 	}
 	
 	private void setupStage1() {
-		setupStage0();
-		hashTable.insert(82, -4134);
+		heap = new Heap<>(10,5);
+		Integer[] testValues = {9 ,8 ,7, 6, 5, 4, 3, 2, 1, 0};
+		heap.setElements(testValues);
 	}
 
 	private void setupStage2() {
-		setupStage1();
-		hashTable.insert(-91354, 137);
-		hashTable.insert(0, 724520);
-		hashTable.insert(-1820, 7);
+		heap = new Heap<>(5,10);
+		Integer[] testValues = {9 ,8 ,7, 6, 5, 4, 3, 2, 1, 0};
 	}
 	
 	@Test
+	void testHeapSort0( ) {
+		setupStage0();
+		int[] testValues = {1 ,2 ,3};
+		heap.heapSort();
+		for (int i = 0; i < heap.getArraysize(); i++) {
+			assertEquals(heap.getElements()[i], testValues[i]);
+		}
+	}
+	
+	
+	@Test
+	void testHeapSort1() {
+		setupStage1();
+		heap.heapSort();
+		for (int i = 0; i < heap.getArraysize() - 1; i++) {
+			int j = i + 1;
+			assertTrue(heap.getElements()[j].compareTo(heap.getElements()[i]) >= 0, "");
+			
+		}
+		
+	}
+	
+	/*@Test
 	void testInsert0() {
 		setupStage0();
 		int testValue = 75343;
@@ -91,6 +115,6 @@ class HashTableTest {
 	void testSearch2() {
 		setupStage2();
 		assertEquals(hashTable.search(0), 724520, "The hashTable is not searching as well");
-	}
+	}*/
 	
 }

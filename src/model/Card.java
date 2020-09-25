@@ -4,10 +4,17 @@ import java.util.Date;
 
 public class Card {
 	
+	
+	//al agregar el usuario el ya viene con una deuda en la tarjeta definida, ya que en el transcurso del tiempo no podra aumentar esa deuda-hacer pagos con ella-
+	//funcionalidad usar tarjeta???
+	
+	
 	private long number;
 	private Date paymentDate;
 	private int cvc;
 	private String dueDate;
+	private int cuotas;
+	private int cupo; 
 	
 	/**
 	 * @param number
@@ -15,7 +22,7 @@ public class Card {
 	 * @param cvc
 	 * @param dueDate
 	 */
-	public Card(long number, Date paymentDate, int cvc, String dueDate) {
+	public Card(long number, Date paymentDate, int cvc, String dueDate, int cuotas, int cupo) {
 		super();
 		this.number = number;
 		this.paymentDate = paymentDate;
