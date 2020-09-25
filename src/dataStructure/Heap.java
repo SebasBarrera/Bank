@@ -27,13 +27,13 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 		}
 	}
 
-
 	@Override
 	public void maxHeapify(int i) {
 		int l = left(i);
 		int  r = right(i);
 		int largest = i;
-		if (l <= heapSize && (elements[l/*-1*/].compareTo(elements[i]) > 0)) {
+		
+		if (l <= heapSize && (elements[l].compareTo(elements[i]) > 0)) {
 			largest = l;
 		}
 		if (r <= heapSize && (elements[r/*-1*/].compareTo(elements[largest]) > 0)) {
@@ -57,16 +57,16 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 
 	@Override
 	public int right(int i) {
-		return 2*i+1;
+		return (int) Math.floor(2*i+1) -1;
 	}
 
 	@Override
 	public int left(int i) {
-		return 2*i;
+		return (int) Math.floor(2*i) -1;
 	}
 	@Override
 	public int parent(int i) {
-		return 2/i;
+		return (int) Math.floor(2/i) -1;
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 		this.keys = keys;
 	}
 	
-	//Implementaci�n de la priority queue
+	//Implementacion de la priority queue
 	
 	
 	@Override
@@ -156,7 +156,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 		keys[i] = key;
 		maxHeapify(i);
 	}
-
+	//agregar tipo E
 	@Override
 	public void priorityInsert(int key) {
 
@@ -164,9 +164,10 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 		if(heapSize > arraysize) {
 			reSize();
 		}
-		//elements[heapSize] = Integer.MIN_VALUE; esperar a Aristi por complejidad y no regarnos xd
-		increaseKey(heapSize, key);
 		
+	//	elements[heapSize] = Integer.MIN_VALUE;
+		
+		increaseKey(heapSize, key);
 	}
 	
 	@SuppressWarnings("unchecked")
