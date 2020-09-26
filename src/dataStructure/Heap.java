@@ -169,7 +169,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 		}else {
 			max = elements[0];
 			elements[0] = elements[heapSize];
-			int counter = 0;
+			int counter = 1;
 			maxHeapify(0, counter);
 		}
 		return max;
