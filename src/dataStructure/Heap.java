@@ -199,11 +199,12 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 	}
 	
 	@Override
-	public void priorityInsert(int key) throws SmallerKeyException {
+	public void priorityInsert(int key, E element) throws SmallerKeyException {
 		heapSize++;
 		if(heapSize > arraysize) {
 			reSize();
 		}
+		elements[heapSize] = element;
 		keys[heapSize] = Integer.MIN_VALUE;
 		increaseKey(heapSize, key);
 	}
