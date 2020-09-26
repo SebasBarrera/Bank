@@ -29,26 +29,39 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 
 	@Override
 	public void maxHeapify(int i) {
+		
 		int l = left(i);
 		int  r = right(i);
+		i--;
 		int largest = i;
 		
-		if (l <= heapSize && (elements[l].compareTo(elements[i]) > 0)) {
-			largest = l;
-		}
-		if (r <= heapSize && (elements[r/*-1*/].compareTo(elements[largest]) > 0)) {
-			largest = r;
+		if (!isLeaf(l) && !isLeaf(r)) {
+			if (l <= heapSize & (elements[l].compareTo(elements[i]) > 0)) {
+				largest = l;
+			}
+			if (r <= heapSize && (elements[r/*-1*/].compareTo(elements[largest]) > 0)) {
+				largest = r;
+			}
 		}
 		if (largest != i) {
 			swap(i, largest);
 			maxHeapify(largest);
 		}
+		
+	}
+	
+	public boolean isLeaf(int i) {
+		boolean leaf = false;
+		if (i < heapSize) {
+			leaf = true;
+		}
+		return leaf;
 	}
 
 	@Override
 	public void heapSort() {
 		buildMaxHeap();
-		for (int i = arraysize - 1; i >= 1; i--) {
+		for (int i = arraysize-1; i >= 0; i--) {
 			swap(0, i);
 			heapSize--;
 			maxHeapify(i);
@@ -108,10 +121,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 	 * @param elements the elements to set
 	 */
 	public void setElements(E[] n) {
-		for (int i = n.length+1; i > 0; i++) {
-			elements[i] = n[i+1];
-		}
-		
+		elements = n;
 	}
 	
 	public void setKeys(int[] keys) {
@@ -165,7 +175,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 			reSize();
 		}
 		
-	//	elements[heapSize] = Integer.MIN_VALUE;
+		keys[heapSize] = Integer.MIN_VALUE;
 		
 		increaseKey(heapSize, key);
 	}
@@ -192,6 +202,5 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E>{
 		elements[j] = tmp;
 		keys[j] = tmpk;
 	}
-
 
 }
