@@ -3,7 +3,7 @@ package dataStructure;
 public interface IHeap<E> {
 	
 	public void buildMaxHeap();
-	public void maxHeapify(int i);
+	public void maxHeapify(int i, int c);
 	public void heapSort();
 	public int right(int i);
 	public int left(int i);	

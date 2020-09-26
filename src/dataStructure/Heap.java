@@ -26,26 +26,39 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 	@Override
 	public void heapSort() {
 		buildMaxHeap();
+		int counter;
 		for (int i = arraysize-1; i >= 1; i--) {
 			swap(0, i);
 			heapSize--;
-			maxHeapify(1);
+			counter = 0;
+			maxHeapify(1, counter);
 		}
 	}
 	
 	@Override
 	public void buildMaxHeap() {
 		heapSize = arraysize;
+		int counter;
 		for (int i = heapSize/2; i >= 1; i--) {
-			maxHeapify(i);
+			counter = 0;
+			maxHeapify(i, counter);
 		}
 	}
 
 	@Override
-	public void maxHeapify(int i) {
-		int l = left(i);
-		int  r = right(i);
-		i--;
+	public void maxHeapify(int i, int counter) {
+		int l;
+		int r;
+		if (counter == 0) {
+			l = left(i);
+			r = right(i);
+			i--;
+		} else {
+			l = 2 * i + 1;
+			r = 2 * i + 1 + 1;
+		}
+		counter++;
+		
 		int largest = i;
 		if (exist(l) && l <= heapSize & (elements[l].compareTo(elements[i]) > 0)) {
 			largest = l;
@@ -55,26 +68,9 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 		}
 		if (largest != i) {
 			swap(i, largest);
-			maxHeapify2(largest);
+			maxHeapify(largest, counter);
 		}
-	}
-	
-	public void maxHeapify2(int i) {
-		int l = left2(i);
-		int  r = right2(i);
-		int largest = i;
-		if (exist(l) && l <= heapSize & (elements[l].compareTo(elements[i]) > 0)) {
-			largest = l;
-		}
-		if (exist(r) && r <= heapSize && (elements[r].compareTo(elements[largest]) > 0)) {
-			largest = r;
-		}
-		if (largest != i) {
-			swap(i, largest);
-			maxHeapify2(largest);
-		}
-	}
-	
+	}	
 	public void swap(int i, int j) {
 		E tmp = elements[i];
 		int tmpk = keys[i];
@@ -115,16 +111,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 	@Override
 	public int parent(int i) {
 		return (int) Math.floor(2/i) -1;
-	}
-	
-	public int left2(int i) {
-		return 2*i+1;
-	}
-	
-	public int right2(int i) {
-		return 2*i + 1+1;
-	}
-	
+	}	
 
 	/**
 	 * @return the array Size
@@ -180,7 +167,8 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 		}else {
 			max = elements[0];
 			elements[0] = elements[heapSize];
-			maxHeapify(0);
+			int counter = 0;
+			maxHeapify(0, counter);
 		}
 		return max;
 	}
@@ -206,7 +194,8 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 			throw new BiggerKeyException(key);
 		}
 		keys[i] = key;
-		maxHeapify(i);
+		int counter = 0;
+		maxHeapify(i, counter);
 	}
 	
 	@Override

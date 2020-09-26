@@ -27,6 +27,4 @@ public class SmallerKeyException extends Exception {
 		this.k = k;
 	}
 		
-
 }
-
