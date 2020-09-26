@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Card {
@@ -10,12 +11,13 @@ public class Card {
 	
 	
 	private long number;
-	private Date paymentDate;
+	private Calendar paymentDate;
 	private int cvc;
-	private String dueDate;
+	private Calendar dueDate;
 	private int fees;
 	private int quota; 
-	private double debt;
+	private double owe;
+	private double cardSpace;
 	
 	/**
 	 * @param number
@@ -23,7 +25,7 @@ public class Card {
 	 * @param cvc
 	 * @param dueDate
 	 */
-	public Card(long number, Date paymentDate, int cvc, String dueDate, int fees, int quota, double debt) {
+	public Card(long number, Calendar paymentDate, int cvc, Calendar dueDate, int fees, int quota, double owe, double cardSpace) {
 		super();
 		this.number = number;
 		this.paymentDate = paymentDate;
@@ -31,7 +33,8 @@ public class Card {
 		this.dueDate = dueDate;
 		this.fees = fees;
 		this.quota = quota;
-		this.debt = debt;
+		this.owe = owe;
+		this.cardSpace = cardSpace;
 	}
 
 	/**
@@ -51,14 +54,14 @@ public class Card {
 	/**
 	 * @return the paymentDate
 	 */
-	public Date getPaymentDate() {
+	public Calendar getPaymentDate() {
 		return paymentDate;
 	}
 
 	/**
 	 * @param paymentDate the paymentDate to set
 	 */
-	public void setPaymentDate(Date paymentDate) {
+	public void setPaymentDate(Calendar paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 
@@ -79,14 +82,14 @@ public class Card {
 	/**
 	 * @return the dueDate
 	 */
-	public String getDueDate() {
+	public Calendar getDueDate() {
 		return dueDate;
 	}
 
 	/**
 	 * @param dueDate the dueDate to set
 	 */
-	public void setDueDate(String dueDate) {
+	public void setDueDate(Calendar dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -106,12 +109,26 @@ public class Card {
 		this.quota = quota;
 	}
 
-	public double getDebt() {
-		return debt;
+	public double getOwe() {
+		return owe;
 	}
 
-	public void setDebt(double debt) {
-		this.debt = debt;
+	public void setOwe(double owe) {
+		this.owe = owe;
+	}
+
+	/**
+	 * @return the cardSpace
+	 */
+	public double getCardSpace() {
+		return cardSpace;
+	}
+
+	/**
+	 * @param cardSpace the cardSpace to set
+	 */
+	public void setCardSpace(double cardSpace) {
+		this.cardSpace = cardSpace;
 	}
 	
 	
