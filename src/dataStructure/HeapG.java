@@ -4,7 +4,7 @@ import customExceptions.BiggerKeyException;
 import customExceptions.HeapUnderFlowException;
 import customExceptions.SmallerKeyException;
 
-public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
+public class HeapG<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 
 	private int arraysize;
 	private int heapSize;
@@ -16,7 +16,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 	 * @param heapSize
 	 */
 	@SuppressWarnings("unchecked")
-	public Heap(int arraysize, int heapSize) {
+	public HeapG(int arraysize, int heapSize) {
 		elements = (E[]) new Comparable[arraysize];
 		keys = new int[arraysize];
 		this.arraysize = arraysize;
@@ -152,7 +152,9 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 	 * @param elements the elements to set
 	 */
 	public void setElements(E[] n) {
-		elements = n;
+		setArraysize(n.length);
+		setHeapSize(n.length);
+		elements = n;	
 	}
 	
 	public void setKeys(int[] keys) {

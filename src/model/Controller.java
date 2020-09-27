@@ -30,17 +30,21 @@ public class Controller {
 		ArrayList<Card> cards = new ArrayList<Card>();
 		Card card1 = new Card(765432, paymentDate, 234, 92, 48, 1000000.0, 2000000.0);
 		cards.add(card1);
-		control.addPerson("Jon Z", 14793, 28596313, cards, ing, 19, true, 1, false);
+		control.addPerson("Jon Z", 14793, cards, ing, 19, true, 1, false);
 	}
 	
-	public void addToRow() {
+	public void addToRow() throws AreadyAddedIdException {
 		String name = sc.nextLine();//INTERFAZ LOS PIDE
 		int id = sc.nextInt();sc.nextLine();//INTERFAZ LOS PIDE
 		try {
 			control.addPersonToRow(id, name);
-		} catch (SmallerKeyException | UserIsNotRegiterException e) {
+		} catch (SmallerKeyException e) {
 			e.getMessage();
+		} catch (UserIsNotRegiterException e) {
+			e.getMessage();
+			addPerson(name, id);
 		}
+		
 	}
 	
 	public void searchUserToActions() throws UserIsNotRegiterException, ActionsOnInactiveException, NotEnoughtMoneyException, AlreadyInactiveException, AlreadyActiveException, NotFoundCardException, AlreadyPaidException, NothingToUndoException, NothingToRedoException {
@@ -68,7 +72,8 @@ public class Controller {
 				break;
 				case "payCard":
 					long number = sc.nextLong();sc.nextLine(); // numero de la tarjeta que pagara
-					int comoPagara = sc.nextInt(); sc.nextLine(); // aqui se decide si el usuario pagara toda la deuda de la tarjeta, o solo la siguiente cuota
+					int comoPagara = sc.nextInt(); sc.nextLine(); // aqui se decide si el usuario pagara toda la deuda de la tarjeta, 
+																	//o solo la siguiente cuota
 					boolean total;
 					if (comoPagara == 1) {
 						total = true;
@@ -98,8 +103,26 @@ public class Controller {
 		}
 	}
 	
-	public void addPerson() {
-		
+	public void addPerson(String name, int id) throws AreadyAddedIdException {
+		//siempre empieza sin tarjetas
+		Calendar ing = Calendar.getInstance();
+		int age = sc.nextInt(); sc.nextLine(); //cuantos años
+		int invalido = sc.nextInt(); sc.nextLine(); // 0 si es invalido, 1 si no
+		boolean invalid;
+		if (invalido == 0) {
+			invalid = true;
+		} else {
+			invalid = false;
+		}
+		int gender = sc.nextInt(); sc.nextLine(); // 0 si es invalido, 1 si es hombre
+		boolean pregnated = false;
+		if (gender == Person.FEMALE) {
+			int preg = sc.nextInt(); sc.nextLine(); // 0 si esta embarazada, 1 si no
+			if (preg == 0) {
+				pregnated = true;
+			}
+		}	
+		control.addPerson(name, id, null, ing, age, invalid, gender, pregnated);
 	}
 	
 }

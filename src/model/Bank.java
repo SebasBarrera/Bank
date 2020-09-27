@@ -18,28 +18,29 @@ import dataStructure.*;
 public class Bank {
 	
 	private ArrayList<Person> persons;
-	private Heap<Person> priorityRow;
-	private Queue<Person> normalRow;
-	private HashTable<Integer, Person> dataBase;
-	private Stack<Person> undo;
-	private Stack<Person> redo;
+	private HeapG<Person> priorityRow;
+	private QueueG<Person> normalRow;
+	private HashTableG<Integer, Person> dataBase;
+	private StackG<Person> undo;
+	private StackG<Person> redo;
 	
 	public Bank() {
 		persons = new ArrayList<>();
-		priorityRow = new Heap<>(0, 0);
-		normalRow = new Queue<>();
-		dataBase = new HashTable<>();
-		undo = new Stack<>();
-		redo = new Stack<>();
+		priorityRow = new HeapG<>(0, 0);
+		normalRow = new QueueG<>();
+		dataBase = new HashTableG<>();
+		undo = new StackG<>();
+		redo = new StackG<>();
 	}
 	
-	public void addPerson(String name, int id, long ac, ArrayList<Card> cards, Calendar ing, 
+	public void addPerson(String name, int id, ArrayList<Card> cards, Calendar ing, 
 			int age,boolean invalid, int gender, boolean pregnated) throws AreadyAddedIdException {
 		for (int i = 0; i < persons.size(); i++) {
 			if (id == persons.get(i).getId()) {
 				throw new AreadyAddedIdException(id, persons.get(i).getName());
 			}
 		}
+		long ac = newAccountNumber();
 		persons.add(new Person(name, id, ac, cards, ing, age, invalid, gender, pregnated));
 	}
 	
@@ -61,7 +62,16 @@ public class Bank {
 		if (priority == 0) {
 			normalRow.offer(p);
 		} else {
-			priorityRow.priorityInsert(priority, p);
+			if (priorityRow.getArraysize() == 0) {
+				Person[] ps = new Person[1];
+				ps[0] = p;
+				priorityRow.setElements(ps);
+				int[] prio = new int[1];
+				prio[0] = priority;
+			} else {
+				priorityRow.priorityInsert(priority, p);
+			}
+			
 		}		
 	}
 
@@ -124,6 +134,21 @@ public class Bank {
 		return (long) number;
 	}
 	
+	public long newAccountNumber() {
+		double number;
+		number = Math.random() * (Integer.MAX_VALUE - Integer.MAX_VALUE-10000000) + Integer.MAX_VALUE-10000000;
+		number = number * 1000000000;
+		boolean equals = false;
+		for (int i = 0; i < persons.size() && !equals; i++) {
+			if (persons.get(i).getAccountNumber() == number) {
+				equals = true;
+			}
+		}
+		if (equals) {
+			newCardNumber();
+		}
+		return (long) number;
+	}
 	
 	public void undo(Person p) throws NothingToUndoException {
 		if (!undo.isEmpty()) {

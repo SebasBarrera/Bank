@@ -3,14 +3,14 @@ package test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import dataStructure.Node;
-import dataStructure.Stack;
+import dataStructure.StackG;
 
 class StackTest {
 
-	private Stack<Integer> stack;
+	private StackG<Integer> stack;
 	
 	private void setupStage0() {
-		stack = new Stack<>();
+		stack = new StackG<>();
 	}
 	
 	private void setupStage1() {
