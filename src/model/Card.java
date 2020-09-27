@@ -1,37 +1,46 @@
 package model;
 
-import java.util.Date;
+import customExceptions.AlreadyPaidException;
 
 public class Card {
 	
-	
-	//al agregar el usuario el ya viene con una deuda en la tarjeta definida, ya que en el transcurso del tiempo no podra aumentar esa deuda-hacer pagos con ella-
-	//funcionalidad usar tarjeta???
-	
-	
 	private long number;
-	private Date paymentDate;
+	private int paymentDay; // indica el limite dia del mes en el cual pagara la tarjeta
 	private int cvc;
-	private String dueDate;
-	private int fees;
-	private int quota; 
-	private double debt;
+	private int fees; // interes periodico mensual vencido
+	private int quota; // nº cuotas
+	private double aliquot; //valor de la alicuota
+	private double owe;// cuanto debe de la tarjeta
+	private double cardSpace; // cupo de la tarjeta
+	public boolean isPaid; //indica si ya fue pagada en su totalidad o no
 	
 	/**
 	 * @param number
-	 * @param paymentDate
+	 * @param paymentDay
 	 * @param cvc
 	 * @param dueDate
 	 */
-	public Card(long number, Date paymentDate, int cvc, String dueDate, int fees, int quota, double debt) {
+	public Card(long number, int paymentDay, int cvc, int fees, int quota, double owe, double cardSpace) {
 		super();
 		this.number = number;
-		this.paymentDate = paymentDate;
+		this.paymentDay = paymentDay;
 		this.cvc = cvc;
-		this.dueDate = dueDate;
 		this.fees = fees;
 		this.quota = quota;
-		this.debt = debt;
+		this.owe = owe;
+		this.cardSpace = cardSpace;
+		calculateAliquot();
+		calculateTotalOwe();
+		isPaid = false;
+	}
+	
+	private void calculateAliquot() {
+		aliquot = (owe * Math.pow((1 + fees), quota) * fees) / (Math.pow((1 + fees), quota) - 1); //formula de la alicuota
+		
+	}
+
+	public void calculateTotalOwe() {
+		owe = aliquot * quota; //valor total que se debera
 	}
 
 	/**
@@ -49,17 +58,17 @@ public class Card {
 	}
 
 	/**
-	 * @return the paymentDate
+	 * @return the paymentDay
 	 */
-	public Date getPaymentDate() {
-		return paymentDate;
+	public int getPaymentDay() {
+		return paymentDay;
 	}
 
 	/**
-	 * @param paymentDate the paymentDate to set
+	 * @param paymentDay the paymentDay to set
 	 */
-	public void setPaymentDate(Date paymentDate) {
-		this.paymentDate = paymentDate;
+	public void setPaymentDay(int paymentDay) {
+		this.paymentDay = paymentDay;
 	}
 
 	/**
@@ -74,20 +83,6 @@ public class Card {
 	 */
 	public void setCvc(int cvc) {
 		this.cvc = cvc;
-	}
-
-	/**
-	 * @return the dueDate
-	 */
-	public String getDueDate() {
-		return dueDate;
-	}
-
-	/**
-	 * @param dueDate the dueDate to set
-	 */
-	public void setDueDate(String dueDate) {
-		this.dueDate = dueDate;
 	}
 
 	public int getFees() {
@@ -106,14 +101,75 @@ public class Card {
 		this.quota = quota;
 	}
 
-	public double getDebt() {
-		return debt;
+	public double getOwe() {
+		return owe;
 	}
 
-	public void setDebt(double debt) {
-		this.debt = debt;
+	public void setOwe(double owe) {
+		this.owe = owe;
+	}
+
+	/**
+	 * @return the cardSpace
+	 */
+	public double getCardSpace() {
+		return cardSpace;
+	}
+
+	/**
+	 * @param cardSpace the cardSpace to set
+	 */
+	public void setCardSpace(double cardSpace) {
+		this.cardSpace = cardSpace;
 	}
 	
 	
+	public void payTotal() throws AlreadyPaidException {
+		if (!isPaid) {
+			isPaid = true;
+			owe = 0;
+		} else {
+			throw new AlreadyPaidException(number);
+		}
+	}
+	
+	public void payNextQuote() throws AlreadyPaidException {
+		if (!isPaid) {
+			owe = owe - aliquot;
+			if (owe == 0) {
+				isPaid = true;
+			}
+		} else {
+			throw new AlreadyPaidException(number);
+		}
+	}
+
+	/**
+	 * @return the aliquot
+	 */
+	public double getAliquot() {
+		return aliquot;
+	}
+
+	/**
+	 * @param aliquot the aliquot to set
+	 */
+	public void setAliquot(double aliquot) {
+		this.aliquot = aliquot;
+	}
+
+	/**
+	 * @return the isPaid
+	 */
+	public boolean isPaid() {
+		return isPaid;
+	}
+
+	/**
+	 * @param isPaid the isPaid to set
+	 */
+	public void setPaid(boolean isPaid) {
+		this.isPaid = isPaid;
+	}
 	
 }
