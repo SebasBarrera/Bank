@@ -40,5 +40,5 @@ public class ActionsOnInactiveException extends Exception {
 	public void setaC(long aC) {
 		this.aC = aC;
 	}
-
+	
 }
