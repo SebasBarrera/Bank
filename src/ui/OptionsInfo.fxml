@@ -12,17 +12,17 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="130.0" layoutY="116.0" mnemonicParsing="false" text="Withdraw">
+      <Button layoutX="130.0" layoutY="116.0" mnemonicParsing="false" text="Withdraw" onAction="#withdrawOption">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="374.0" layoutY="116.0" mnemonicParsing="false" text="Deposit">
+      <Button layoutX="374.0" layoutY="116.0" mnemonicParsing="false" text="Deposit" onAction="#depositOption">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="95.0" layoutY="200.0" mnemonicParsing="false" text="Account cancellation">
+      <Button layoutX="95.0" layoutY="200.0" mnemonicParsing="false" text="Account cancellation" onAction="#accountIsBeingCanceledAlert">
          <font>
             <Font size="14.0" />
          </font>
