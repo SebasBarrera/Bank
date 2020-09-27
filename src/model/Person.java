@@ -2,26 +2,31 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
+import customExceptions.ActionsOnInActiveException;
+import customExceptions.AlreadyUnActiveException;
 import customExceptions.AreadyAddedCardException;
-import customExceptions.AreadyAddedIdException;
+import customExceptions.NotEnoughtMoneyException;
 
 public class Person implements Comparable<Person>{
 	
 	public final static int MALE = 1;
 	public final static int FEMALE = 0;
+	public final static int MAX_ACTIONS = 4;
 	
 	private String name;
 	private int id;
 	private long accountNumber;
+	private double totalDebt;//esto representa cuanto debido en la tarjeta de credito
+	private boolean activeAccount;
+	private double amountAccount;
 	private ArrayList<Card> cards;
 	private Calendar ingress;
-	private double totalDebt;
 	private int age;
 	private boolean invalid;
 	private int gender;
 	private boolean pregnated;
+	private int canUndoActions;
 	
 	
 	/**
@@ -43,6 +48,8 @@ public class Person implements Comparable<Person>{
 		this.invalid = invalid;
 		this.gender = gender;
 		this.pregnated = pregnated;
+		canUndoActions = 0;
+		activeAccount = true;
 	}
 	
 	public void addCard(long number, Calendar paymentDate, int cvc, Calendar dueDate, int fees, int quota, double owe, double cardSpace) throws AreadyAddedCardException {
@@ -118,8 +125,6 @@ public class Person implements Comparable<Person>{
 		this.totalDebt = totalDebt;
 	}
 
-	
-	
 	/**
 	 * @return the name
 	 */
@@ -208,8 +213,100 @@ public class Person implements Comparable<Person>{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
-	/*
-	 * TODO
+
+	/**
+	 * @return the canUndoActions
 	 */
+	public int getCanUndoActions() {
+		return canUndoActions;
+	}
+
+	/**
+	 * @param canUndoActions the canUndoActions to set
+	 */
+	public void setCanUndoActions(int canUndoActions) {
+		this.canUndoActions = canUndoActions;
+	}
+	
+	public void doAnAction() {
+		if (canUndoActions < MAX_ACTIONS) {
+			canUndoActions++;
+		}
+	}
+	
+	public boolean canUndo() {
+		boolean can = false;
+		if (canUndoActions > 0) {
+			can = true;
+		}
+		return can;
+	}
+	
+	public boolean canRedo() {
+		boolean can = false;
+		if (canUndoActions >= MAX_ACTIONS) {
+			can = true;
+		}
+		return can;
+	}
+
+	/**
+	 * @return the amountAccount
+	 */
+	public double getAmountAccount() {
+		return amountAccount;
+	}
+
+	/**
+	 * @param amountAccount the amountAccount to set
+	 */
+	public void setAmountAccount(double amountAccount) {
+		this.amountAccount = amountAccount;
+	}
+	
+	public void consignment(double more) throws ActionsOnInActiveException {
+		if (!activeAccount) {
+			throw new ActionsOnInActiveException(name, accountNumber);
+		}
+		amountAccount = amountAccount + more;
+	}
+	
+	public void withdrawals(double more) throws NotEnoughtMoneyException, ActionsOnInActiveException {
+		if (amountAccount >= more) {
+			if (!activeAccount) {
+				throw new ActionsOnInActiveException(name, accountNumber);
+			}
+			amountAccount = amountAccount - more;
+		} else {
+			throw new NotEnoughtMoneyException(amountAccount, more, name, accountNumber);
+		}
+	}
+
+	/**
+	 * @return the activeAccount
+	 */
+	public boolean isActiveAccount() {
+		return activeAccount;
+	}
+
+	/**
+	 * @param activeAccount the activeAccount to set
+	 */
+	public void setActiveAccount(boolean activeAccount) {
+		this.activeAccount = activeAccount;
+	}
+	
+	public void cancelAccount() throws AlreadyUnActiveException {
+		if (activeAccount) {
+			amountAccount = 0;
+			activeAccount = false;
+		} else {
+			throw new AlreadyUnActiveException(name, accountNumber);
+		}
+	}
+	
+	public void activeAccount() {
+		
+	}
+	
 }

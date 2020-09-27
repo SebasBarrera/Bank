@@ -2,10 +2,13 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
+import customExceptions.ActionsOnInActiveException;
+import customExceptions.AlreadyUnActiveException;
 import customExceptions.AreadyAddedIdException;
+import customExceptions.NotEnoughtMoneyException;
 import customExceptions.SmallerKeyException;
+import customExceptions.UserIsNotRegiterException;
 import dataStructure.*;
 
 public class Bank {
@@ -20,15 +23,18 @@ public class Bank {
 	private Heap<Person> priorityRow;
 	private Queue<Person> normalRow;
 	private HashTable<Integer, Person> dataBase;
+	private Stack<Person> undo;
 	
 	public Bank() {
 		persons = new ArrayList<>();
 		priorityRow = new Heap<>(0, 0);
 		normalRow = new Queue<>();
 		dataBase = new HashTable<>();
+		undo = new Stack<>();
 	}
 	
-	public void addPerson(String name, int id, long ac, ArrayList<Card> cards, Calendar ing, int age, boolean invalid, int gender, boolean pregnated) throws AreadyAddedIdException {
+	public void addPerson(String name, int id, long ac, ArrayList<Card> cards, Calendar ing, 
+			int age,boolean invalid, int gender, boolean pregnated) throws AreadyAddedIdException {
 		for (int i = 0; i < persons.size(); i++) {
 			if (id == persons.get(i).getId()) {
 				throw new AreadyAddedIdException(id, persons.get(i).getName());
@@ -37,38 +43,51 @@ public class Bank {
 		persons.add(new Person(name, id, ac, cards, ing, age, invalid, gender, pregnated));
 	}
 	
-	public void addPersonToRow(int id) throws SmallerKeyException {
+	
+	public void addPersonToRow(int id, String name) throws SmallerKeyException, UserIsNotRegiterException {
 		int priority = 0;
-		Person p = searchHash(id);//busqyeda efectiva... hashtable?
-		if (p != null) {
-			if (p.getAge() >= 60) {
+		Person p = searchHash(id, name);//busqyeda efectiva... hashtable?
+		if (p.getAge() >= 60) {
+			priority++;
+		}
+		if (p.isInvalid()) {
+			priority++;
+		}
+		if (p.getGender() == 0) {
+			if (p.isPregnated()) {
 				priority++;
-			}
-			if (p.isInvalid()) {
-				priority++;
-			}
-			if (p.getGender() == 0) {
-				if (p.isPregnated()) {
-					priority++;
-				}
-			}
-			if (priority == 0) {
-				normalRow.offer(p);
-			} else {
-				priorityRow.priorityInsert(priority, p);
 			}
 		}
-			
+		if (priority == 0) {
+			normalRow.offer(p);
+		} else {
+			priorityRow.priorityInsert(priority, p);
+		}		
 	}
 
-	public Person searchHash(int id) {
+	public Person searchHash(int id, String name) throws UserIsNotRegiterException {
 		Person p = dataBase.search(id);
+		if (p == null) {
+			throw new UserIsNotRegiterException(id, name);
+		}
 		return p;
 	}
 	
+	public void consignment(Person p, int value) throws ActionsOnInActiveException {
+		p.consignment(value);
+	}
 	
+	public void withdrawals(Person p, int value) throws NotEnoughtMoneyException, ActionsOnInActiveException {
+		p.withdrawals(value);
+	}
 
-	//hashtable para la busquedas
+	public void cancelAccount(Person p) throws AlreadyUnActiveException {
+		p.cancelAccount();
+	}
+	
+	public void activeAccount(Person p) {
+		p.activeAccount();
+	}
 	
 	//stack guardara objetos de tipo persona 5 operaciones
 	

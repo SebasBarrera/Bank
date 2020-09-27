@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 import customExceptions.AreadyAddedIdException;
+import customExceptions.SmallerKeyException;
+import customExceptions.UserIsNotRegiterException;
 
 public class Controller {
 		
@@ -30,10 +32,13 @@ public class Controller {
 	}
 	
 	public void queueQueue() {
-		//pide nombre y cc
 		String name = sc.nextLine();//INTERFAZ LOS PIDE
 		int id = sc.nextInt();sc.nextLine();//INTERFAZ LOS PIDE
-		control.addPersonToRow(id);
+		try {
+			control.addPersonToRow(id, name);
+		} catch (SmallerKeyException | UserIsNotRegiterException e) {
+			e.getMessage();
+		}
 	}
 	
 	
