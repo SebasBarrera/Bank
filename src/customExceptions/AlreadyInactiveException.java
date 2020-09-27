@@ -1,14 +1,13 @@
 package customExceptions;
 
 @SuppressWarnings("serial")
-public class ActionsOnInactiveException extends Exception {
-	
+public class AlreadyInactiveException extends Exception {
+
 	private String name;
 	private long aC;
 
-	public ActionsOnInactiveException(String name, long aC) {
-		super("The account " + aC + "of the user " + name + ", is inactive\n" +
-				"You can not do any action on it");
+	public AlreadyInactiveException(String name, long aC) {
+		super("The account " + aC + " of the user " + name + ", is already inactive");
 		this.aC = aC;
 		this.name = name;
 	}

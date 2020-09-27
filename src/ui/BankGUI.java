@@ -2,6 +2,7 @@ package ui;
 
 import java.io.IOException;
 
+import customExceptions.AreadyAddedIdException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +32,11 @@ public class BankGUI {
     private TableColumn<Person, String> amountColumn;
 	
 	public BankGUI() {
-		control = new Controller();
+		try {
+			control = new Controller();
+		} catch (AreadyAddedIdException e) {
+			e.getMessage();
+		}
 		initialize();
 	}
 	

@@ -9,7 +9,7 @@ public class NotEnoughtMoneyException extends Exception {
 	private long aC; 
 
 	public NotEnoughtMoneyException(double aA, double more, String name, long aC) {
-		super("The user " + name + " with account number " + aC + ", hava not enought money to do this withdrawal \n"
+		super("The user " + name + " with account number " + aC + ", have not enought money to do this withdrawal \n"
 				+ "The account have " + aA + "$, and it's trying to withdrawals " + more + "$");
 		this.aA = aA;
 		this.more = more;

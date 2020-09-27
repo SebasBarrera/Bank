@@ -1,13 +1,13 @@
 package customExceptions;
 
 @SuppressWarnings("serial")
-public class AlreadyUnActiveException extends Exception {
-
+public class AlreadyActiveException extends Exception {
+	
 	private String name;
 	private long aC;
 
-	public AlreadyUnActiveException(String name, long aC) {
-		super("MESSASGE");//TODO
+	public AlreadyActiveException(String name, long aC) {
+		super("The account " + aC + " of the user " + name + ", is already active");
 		this.aC = aC;
 		this.name = name;
 	}
