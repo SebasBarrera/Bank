@@ -1,6 +1,6 @@
 package dataStructure;
 
-public class StackG<E> implements IStack<E>{
+public class Stack<E> implements IStack<E>{
 	
 	private Node<E> top;
 	

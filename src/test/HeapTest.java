@@ -2,26 +2,26 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import dataStructure.HeapG;
+import dataStructure.Heap;
 
 class HeapTest {
 
-	private HeapG<Integer> heap;
+	private Heap<Integer> heap;
 	
 	private void setupStage0() {
-		heap = new HeapG<>(3,3);
+		heap = new Heap<>(3,3);
 		Integer[] testValues = {1 ,2 ,3};
 		heap.setElements(testValues);
 	}
 	
 	private void setupStage1() {
-		heap = new HeapG<>(10,10);
+		heap = new Heap<>(10,10);
 		Integer[] testValues = {9 ,8 ,7, 6, 5, 4, 3, 2, 1, 0};
 		heap.setElements(testValues);
 	}
 
 	private void setupStage2() {
-		heap = new HeapG<>(10,3);
+		heap = new Heap<>(10,3);
 		Integer[] testValues = {4 ,1 ,3 ,2 ,16 , 9, 10, 14, 8, 7};
 		heap.setElements(testValues);
 	}

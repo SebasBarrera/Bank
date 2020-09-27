@@ -1,13 +1,13 @@
 package dataStructure;
 
-public class HashTableG<K, V> implements IHashTable<K, V>{
+public class HashTable<K, V> implements IHashTable<K, V>{
 	
 	public final static int ARRAY_SIZE = 991;
 	 
 	private NodeH<K, V>[] nodes;
 	
 	@SuppressWarnings("unchecked")
-	public HashTableG() {
+	public HashTable() {
 		nodes = (NodeH<K,V>[])new NodeH[ARRAY_SIZE];
 	}
 	

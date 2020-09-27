@@ -3,14 +3,14 @@ package test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import dataStructure.Node;
-import dataStructure.QueueG;
+import dataStructure.Queue;
 
 class QueueTest {
 
-	private QueueG<Integer> queue;
+	private Queue<Integer> queue;
 	
 	private void setupStage0() {
-		queue = new QueueG<>();
+		queue = new Queue<>();
 	}
 	
 	private void setupStage1() {

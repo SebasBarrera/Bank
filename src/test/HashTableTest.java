@@ -2,14 +2,14 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import dataStructure.HashTableG;
+import dataStructure.HashTable;
 
 class HashTableTest {
 
-	private HashTableG<Integer, Integer> hashTable;
+	private HashTable<Integer, Integer> hashTable;
 	
 	private void setupStage0() {
-		hashTable = new HashTableG<>();
+		hashTable = new HashTable<>();
 	}
 	
 	private void setupStage1() {

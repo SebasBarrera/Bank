@@ -18,19 +18,19 @@ import dataStructure.*;
 public class Bank {
 	
 	private ArrayList<Person> persons;
-	private HeapG<Person> priorityRow;
-	private QueueG<Person> normalRow;
-	private HashTableG<Integer, Person> dataBase;
-	private StackG<Person> undo;
-	private StackG<Person> redo;
+	private Heap<Person> priorityRow;
+	private Queue<Person> normalRow;
+	private HashTable<Integer, Person> dataBase;
+	private Stack<Person> undo;
+	private Stack<Person> redo;
 	
 	public Bank() {
 		persons = new ArrayList<>();
-		priorityRow = new HeapG<>(0, 0);
-		normalRow = new QueueG<>();
-		dataBase = new HashTableG<>();
-		undo = new StackG<>();
-		redo = new StackG<>();
+		priorityRow = new Heap<>(0, 0);
+		normalRow = new Queue<>();
+		dataBase = new HashTable<>();
+		undo = new Stack<>();
+		redo = new Stack<>();
 	}
 	
 	public void addPerson(String name, int id, ArrayList<Card> cards, Calendar ing, 
