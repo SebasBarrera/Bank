@@ -9,5 +9,4 @@ public interface IHeap<E> {
 	public int left(int i);	
 	public int parent(int i);
 	boolean exist(int i);
-	boolean isLeaf(int i);
 }
