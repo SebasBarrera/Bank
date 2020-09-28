@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
 import customExceptions.BiggerKeyException;
@@ -25,7 +26,7 @@ class HeapTest {
 	}
 
 	private void setupStage2() {
-		heap = new Heap<>(10,3);
+		heap = new Heap<>(10,10);
 		Integer[] testValues = {4, 1, 3, 2, 16, 9, 10, 14, 8, 7};
 		int[] keysValues   =   {4, 3, 0, 2,  0, 0,  1,  0, 1, 5};
 		heap.setElements(testValues);
@@ -198,8 +199,8 @@ class HeapTest {
 	void testDecreaseKey2() throws BiggerKeyException {
 		setupStage2();
 		assertThrows(BiggerKeyException.class, ()->{heap.decreaseKey(3, 7);});
-		heap.decreaseKey(9, 1);
-		assertEquals(1, heap.getKeys()[9]);
+		heap.decreaseKey(0, -1);
+		assertEquals(-1, heap.getKeys()[9]);
 	}
 	
 	@Test
@@ -219,12 +220,29 @@ class HeapTest {
 	void testIncreaseKey2() throws SmallerKeyException {
 		setupStage2();
 		heap.increaseKey(9, 6);
-		assertEquals(6, heap.getKeys()[4]);
+		assertEquals(6, heap.getKeys()[0]);
 	}
 	
+
+	
 	@Test
-	void testPriorityInsert0() {
+	void testPriorityInsert0() throws SmallerKeyException {//dont work
 		setupStage0();
+		heap.priorityInsert(4, 2);
+		Integer[] elements = {4};
+		Integer[] keys = {2};
+		assertEquals(1, heap.getArraysize());
+		Integer.compare(elements[0], heap.getElements()[0]);
 		
+		assertTrue(elements[0].compareTo((int)heap.getElements()[0].intValue())== 0);
+		assertEquals(elements[0], heap.getElements()[0]);
+		assertEquals(heap.getElements()[0], elements[0]);
+		assertEquals(keys[0], heap.getKeys()[0]);
+		heap.priorityInsert(9, 6);
+		int[] elements1 = {9, 4};
+		int[] keys1 = {6, 2};
+		assertEquals(2, heap.getArraysize());
+		assertEquals(elements1[0], heap.getElements()[0]);
+		assertEquals(keys1[0], heap.getKeys()[0]);
 	}
 }

@@ -238,13 +238,7 @@ public class Person implements Comparable<Person>{
 	}
 	
 	
-	public boolean canUndo() {
-		boolean can = false;
-		if (canUndoActions > 0) {
-			can = true;
-		}
-		return can;
-	}
+
 	
 	/**
 	 * @return the amountAccount
@@ -260,14 +254,14 @@ public class Person implements Comparable<Person>{
 		this.amountAccount = amountAccount;
 	}
 	
-	public void consignment(double more) throws ActionsOnInactiveException {
+	public void consignment(double more) throws ActionsOnInactiveException, AlreadyInactiveException {
 		if (!activeAccount) {
 			throw new ActionsOnInactiveException(name, accountNumber);
 		}
 		amountAccount = amountAccount + more;
 	}
 	
-	public void withdrawals(double more) throws NotEnoughtMoneyException, ActionsOnInactiveException {
+	public void withdrawals(double more) throws NotEnoughtMoneyException, ActionsOnInactiveException, AlreadyInactiveException {
 		if (amountAccount >= more) {
 			if (!activeAccount) {
 				throw new ActionsOnInactiveException(name, accountNumber);
@@ -299,7 +293,8 @@ public class Person implements Comparable<Person>{
 		} else {
 			throw new AlreadyInactiveException(name, accountNumber);
 		}
-	}
+
+			}
 	
 	public void activeAccount() throws AlreadyActiveException {
 		if (!activeAccount) {
@@ -309,14 +304,27 @@ public class Person implements Comparable<Person>{
 		}
 	}
 	
-	public void payCard(long number, boolean total) throws NotFoundCardException, AlreadyPaidException {
-		Card c = searchCard(number);
-		if (total) {
-			c.payTotal();
+	public void payCard(long number, boolean total, boolean cuentaAhorros) throws NotFoundCardException, AlreadyPaidException, AlreadyInactiveException, NotEnoughtMoneyException, ActionsOnInactiveException {
+		if (activeAccount) {
+			Card c = searchCard(number);
+			if (total) {
+				if (cuentaAhorros) {
+					withdrawals(c.getOwe());
+				} else {
+					c.payTotal();
+				}
+			} else {
+				if (cuentaAhorros) {
+					withdrawals(c.getAliquot());
+				} else {
+					c.payNextQuote();
+				}
+			}
+			setTotalDebt();
 		} else {
-			c.payNextQuote();
+			throw new ActionsOnInactiveException(name, accountNumber);
 		}
-		setTotalDebt();
+		
 	}
 	
 	public Card searchCard(long number) throws NotFoundCardException {

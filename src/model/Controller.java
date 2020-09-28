@@ -8,10 +8,13 @@ import customExceptions.AlreadyActiveException;
 import customExceptions.AlreadyInactiveException;
 import customExceptions.AlreadyPaidException;
 import customExceptions.AreadyAddedIdException;
+import customExceptions.HeapUnderFlowException;
+import customExceptions.NormalRowIsEmptyException;
 import customExceptions.NotEnoughtMoneyException;
 import customExceptions.NotFoundCardException;
 import customExceptions.NothingToRedoException;
 import customExceptions.NothingToUndoException;
+import customExceptions.PriorityRowIsEmptyException;
 import customExceptions.SmallerKeyException;
 import customExceptions.UserIsNotRegiterException;
 
@@ -47,10 +50,20 @@ public class Controller {
 		
 	}
 	
-	public void searchUserToActions() throws UserIsNotRegiterException, ActionsOnInactiveException, NotEnoughtMoneyException, AlreadyInactiveException, AlreadyActiveException, NotFoundCardException, AlreadyPaidException, NothingToUndoException, NothingToRedoException {
-		String name = sc.nextLine();//INTERFAZ LOS PIDE
-		int id = sc.nextInt();sc.nextLine();//INTERFAZ LOS PIDE
-		Person p = control.searchHash(id, name);
+	public void AttendARow() throws UserIsNotRegiterException, ActionsOnInactiveException, NotEnoughtMoneyException, AlreadyInactiveException, AlreadyActiveException, NotFoundCardException, AlreadyPaidException, NothingToUndoException, NothingToRedoException, NormalRowIsEmptyException, HeapUnderFlowException, PriorityRowIsEmptyException {
+		boolean cual; // decide en cual de las dos colas se atendera la siguiente persona
+		int priority = sc.nextInt();
+		if (priority == 1) {
+			cual = true;
+		} else {
+			cual = false;
+		}
+		Person p;
+		if (cual) {
+			p = control.AttendPriorityRow();
+		} else {
+			p = control.AttendNormalRow();
+		}
 		String what = sc.nextLine(); // que accion querra hacer
 		boolean getOut = false;
 		int value;
@@ -66,27 +79,35 @@ public class Controller {
 				break;
 				case "cancelAccount":
 					control.cancelAccount(p);
-				break;
-				case "activeAccount":
-					control.activeAccount(p);
+					@SuppressWarnings("unused") String motivo = ""; // razon por la cual cancela la cuenta
+					@SuppressWarnings("unused") Calendar hoy = Calendar.getInstance(); //fecha en la que se retira
 				break;
 				case "payCard":
 					long number = sc.nextLong();sc.nextLine(); // numero de la tarjeta que pagara
 					int comoPagara = sc.nextInt(); sc.nextLine(); // aqui se decide si el usuario pagara toda la deuda de la tarjeta, 
 																	//o solo la siguiente cuota
-					boolean total;
+					int cuentaDeAhorros = sc.nextInt(); sc.nextLine();  //indica si pagara en efectivo o con la cuenta de ahorros;
+					boolean total; // true si paga toda la tarjeta, false si paga una cuota
+					boolean cuentaAhorros; // true si paga con cuenta de ahorros, false si en efectivo
 					if (comoPagara == 1) {
 						total = true;
 					} else {
 						total = false;
 					}
-					control.payCard(p, number, total);;
+					if (cuentaDeAhorros == 1) {
+						cuentaAhorros = true;
+					} else {
+						cuentaAhorros = false;
+					}
+					control.payCard(p, number, total, cuentaAhorros);;
 				break;
 				case "addCard":
 					double owe = sc.nextDouble();sc.nextLine(); // de cuanto sera la deuda de la tarjeta
 					double cardSpace = sc.nextDouble(); sc.nextLine(); // cupo de la tarjeta
 					int quotas = sc.nextInt();sc.nextLine(); // nº de cuotas
+					// LA TASA ES UN NUMERO ENTRE 1.4452 Y 2.0798,
 					int fees = sc.nextInt();sc.nextLine(); // interes periodico  mensual vencido
+					// SIENDO LA TASA MAS COMUN 1.8715, PODRIAMOS MANEJARLO CON OPCIONES QUE TOMA LA CAJERA
 					int paymentDay =sc.nextInt(); sc.nextLine(); //dia de pago del mes
 					control.addCard(p, paymentDay, fees, quotas, owe, cardSpace);		
 				break;
