@@ -152,7 +152,9 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 	 * @param elements the elements to set
 	 */
 	public void setElements(E[] n) {
-		elements = n;
+		setArraysize(n.length);
+		setHeapSize(n.length);
+		elements = n;	
 	}
 	
 	public void setKeys(int[] keys) {
