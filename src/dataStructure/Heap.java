@@ -182,7 +182,6 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 				i = parent(i);
 			}
 		}
-			
 	}
 	
 	/**

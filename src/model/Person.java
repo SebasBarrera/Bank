@@ -36,6 +36,10 @@ public class Person implements Comparable<Person>{
 	 * @param accountNumber
 	 * @param cards
 	 * @param ingress
+	 * @param age
+	 * @param invalid
+	 * @param gender
+	 * @param pregnated
 	 */
 	public Person(String name, int id, long accountNumber, ArrayList<Card> cards, Calendar ingress,
 					int age, boolean invalid, int gender, boolean pregnated) {

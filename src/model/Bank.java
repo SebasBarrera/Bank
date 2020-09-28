@@ -72,7 +72,6 @@ public class Bank {
 			} else {
 				priorityRow.priorityInsert(priority, p);
 			}
-			
 		}		
 	}
 
@@ -103,8 +102,11 @@ public class Bank {
 		undo.push(p);
 		p.activeAccount();
 	}
-	
-	public void payCard(Person p, long number, boolean total) throws NotFoundCardException, AlreadyPaidException {// si total es true paga toda la tarjeta, si no paga una cuota
+	/**
+	 * description you can only pay the full card or the fee
+	 * @param total: If total is true pay the entire card, if not pay a fee
+	*/
+	public void payCard(Person p, long number, boolean total) throws NotFoundCardException, AlreadyPaidException {
 		undo.push(p);
 		p.payCard(number, total);
 	}
