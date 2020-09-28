@@ -15,6 +15,7 @@ import customExceptions.SmallerKeyException;
 import customExceptions.UserIsNotRegiterException;
 import dataStructure.*;
 
+
 public class Bank {
 	
 	private ArrayList<Person> persons;
