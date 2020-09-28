@@ -71,6 +71,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 			maxHeapify(largest, counter);
 		}
 	}	
+	
 	public void swap(int i, int j) {
 		E tmp = elements[i];
 		int tmpk = keys[i];
@@ -89,15 +90,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 		return leaf;
 	}
 	
-	@Override
-	public boolean isLeaf(int i) {
-		boolean leaf = false;
-		if (i < heapSize) {
-			leaf = true;
-		}
-		return leaf;
-	}
-
+	
 	@Override
 	public int right(int i) {
 		return (int) Math.floor(2*i+1) -1;
@@ -170,7 +163,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 			throw new HeapUnderFlowException(heapSize);
 		}else {
 			max = elements[0];
-			elements[0] = elements[heapSize];
+			elements[0] = elements[heapSize-1];
 			int counter = 1;
 			maxHeapify(0, counter);
 		}
@@ -183,15 +176,22 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 			throw new SmallerKeyException(key);
 		}
 		keys[i] = key;
-		while (i > 0 && (elements[parent(i)].compareTo(elements[i]) < 0)) {
-			E tmp = elements[i];
-			elements[i] = elements[parent(i)];
-			elements[parent(i)] = tmp;
-			i = parent(i);
-			swap(i, parent(i));
+		if (i != 0) {
+			while (parent(i) > 0 && (elements[parent(i)].compareTo(elements[i]) < 0)) {
+				swap(i, parent(i));
+				i = parent(i);
+			}
 		}
+			
 	}
 	
+	/**
+	 * @return the keys
+	 */
+	public int[] getKeys() {
+		return keys;
+	}
+
 	@Override
 	public void decreaseKey(int i, int key) throws BiggerKeyException {
 		if(key > keys[i]) {
@@ -208,9 +208,9 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 		if(heapSize > arraysize) {
 			reSize();
 		}
-		elements[heapSize] = element;
-		keys[heapSize] = Integer.MIN_VALUE;
-		increaseKey(heapSize, key);
+		elements[heapSize-1] = element;
+		keys[heapSize-1] = Integer.MIN_VALUE;
+		increaseKey(heapSize-1, key);
 	}
 	
 	@SuppressWarnings("unchecked")
