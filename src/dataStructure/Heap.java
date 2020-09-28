@@ -60,7 +60,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 		counter++;
 		
 		int largest = i;
-		if (exist(l) && l <= heapSize & (elements[l].compareTo(elements[i]) > 0)) {
+		if (exist(l) && l <= heapSize && (elements[l].compareTo(elements[i]) > 0)) {
 			largest = l;
 		}
 		if (exist(r) && r <= heapSize && (elements[r].compareTo(elements[largest]) > 0)) {
@@ -103,7 +103,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 	
 	@Override
 	public int parent(int i) {
-		return (int) Math.floor(2/i) -1;
+		return (int) Math.floor(i/2) -1;
 	}	
 
 	/**
@@ -175,12 +175,11 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 		}
 		keys[i] = key;
 		if (i != 0) {
-			while (parent(i) > 0 && (elements[parent(i)].compareTo(elements[i]) < 0)) {
+			while (parent(i) >= 0 && (keys[parent(i)] < keys[i])) {
 				swap(i, parent(i));
 				i = parent(i);
 			}
-		}
-			
+		}		
 	}
 	
 	/**
@@ -189,15 +188,26 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 	public int[] getKeys() {
 		return keys;
 	}
-
+	
 	@Override
 	public void decreaseKey(int i, int key) throws BiggerKeyException {
 		if(key > keys[i]) {
 			throw new BiggerKeyException(key);
 		}
 		keys[i] = key;
-		int counter = 0;
-		maxHeapify(i, counter);
+		int l = 2 * i + 1;
+		int r = 2 * i + 2;
+		int largest = i;
+		if (exist(l) && l <= heapSize & (keys[l] > keys[i])) {
+			largest = l;
+		}
+		if (exist(r) && r <= heapSize && (keys[r] > keys[largest])) {
+			largest = r;
+		}
+		if (largest != i) {
+			swap(i, largest);
+			maxHeapify(largest, 1);
+		}
 	}
 	
 	@Override
@@ -214,7 +224,12 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void reSize() {
-		int newArraySize = arraysize * 2;
+		int newArraySize;
+		if (arraysize == 0) {
+			newArraySize = 1;
+		} else {
+			newArraySize = arraysize * 2;
+		}
 		E[] tmpE = (E[]) new Comparable[newArraySize];
 		int[] tmpKeys = new int[newArraySize];
 		for(int i = 0; i < arraysize; i++) {

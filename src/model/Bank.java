@@ -3,45 +3,46 @@ package model;
 import java.util.ArrayList;
 import java.util.Calendar;
 import customExceptions.ActionsOnInactiveException;
-import customExceptions.AlreadyActiveException;
 import customExceptions.AlreadyInactiveException;
 import customExceptions.AlreadyPaidException;
 import customExceptions.AreadyAddedIdException;
+import customExceptions.HeapUnderFlowException;
+import customExceptions.NormalRowIsEmptyException;
 import customExceptions.NotEnoughtMoneyException;
 import customExceptions.NotFoundCardException;
 import customExceptions.NothingToRedoException;
 import customExceptions.NothingToUndoException;
+import customExceptions.PriorityRowIsEmptyException;
 import customExceptions.SmallerKeyException;
 import customExceptions.UserIsNotRegiterException;
 import dataStructure.*;
 
 public class Bank {
 	
-	private ArrayList<Person> persons;
 	private Heap<Person> priorityRow;
 	private Queue<Person> normalRow;
 	private HashTable<Integer, Person> dataBase;
+	private HashTable<Integer, Person> dataBaseOut;
 	private Stack<Person> undo;
 	private Stack<Person> redo;
 	
 	public Bank() {
-		persons = new ArrayList<>();
 		priorityRow = new Heap<>(0, 0);
 		normalRow = new Queue<>();
 		dataBase = new HashTable<>();
+		dataBaseOut = new HashTable<>();
 		undo = new Stack<>();
 		redo = new Stack<>();
 	}
 	
 	public void addPerson(String name, int id, ArrayList<Card> cards, Calendar ing, 
 			int age,boolean invalid, int gender, boolean pregnated) throws AreadyAddedIdException {
-		for (int i = 0; i < persons.size(); i++) {
-			if (id == persons.get(i).getId()) {
-				throw new AreadyAddedIdException(id, persons.get(i).getName());
-			}
+		Person there = dataBase.search(id);
+		if (there != null) {
+			throw new AreadyAddedIdException(id, there.getName());
 		}
 		long ac = newAccountNumber();
-		persons.add(new Person(name, id, ac, cards, ing, age, invalid, gender, pregnated));
+		dataBase.insert(id, new Person(name, id, ac, cards, ing, age, invalid, gender, pregnated));
 	}
 	
 	
@@ -83,29 +84,32 @@ public class Bank {
 		return p;
 	}
 	
-	public void consignment(Person p, int value) throws ActionsOnInactiveException {
+	public void consignment(Person p, int value) throws ActionsOnInactiveException, AlreadyInactiveException {
 		undo.push(p);
 		p.consignment(value);
 	}
 	
-	public void withdrawals(Person p, int value) throws NotEnoughtMoneyException, ActionsOnInactiveException {
+	public void withdrawals(Person p, int value) throws NotEnoughtMoneyException, ActionsOnInactiveException, AlreadyInactiveException {
 		undo.push(p);
 		p.withdrawals(value);
 	}
 
 	public void cancelAccount(Person p) throws AlreadyInactiveException {
 		undo.push(p);
+		dataBaseOut.insert(p.getId(), p);
 		p.cancelAccount();
+		dataBase.delete(p.getId());
 	}
 	
-	public void activeAccount(Person p) throws AlreadyActiveException {
+	/*public void activeAccount(Person p) throws AlreadyActiveException {
 		undo.push(p);
+		
 		p.activeAccount();
-	}
+	}*/
 	
-	public void payCard(Person p, long number, boolean total) throws NotFoundCardException, AlreadyPaidException {// si total es true paga toda la tarjeta, si no paga una cuota
+	public void payCard(Person p, long number, boolean total, boolean cuentaAhorros) throws NotFoundCardException, AlreadyPaidException, AlreadyInactiveException, NotEnoughtMoneyException, ActionsOnInactiveException {// si total es true paga toda la tarjeta, si no paga una cuota
 		undo.push(p);
-		p.payCard(number, total);
+		p.payCard(number, total, cuentaAhorros);
 	}
 	
 	public void addCard(Person p, int paymentDay, int fees, int quotas, double owe, double cardSpace) {
@@ -125,9 +129,13 @@ public class Bank {
 		number = Math.random() * (Integer.MAX_VALUE - Integer.MAX_VALUE-10000000) + Integer.MAX_VALUE-10000000;
 		number = number * 1000000000;
 		boolean equals = false;
-		for (int i = 0; i < persons.size() && !equals; i++) {
-			equals = persons.get(i).searchCardToCreate((long) number);
-		}
+		for (int i = 0; i < HashTable.ARRAY_SIZE && !equals; i++) {
+			Person p = dataBase.search(i);
+			if (p != null) {
+				equals = p.searchCardToCreate((long)number);
+			}
+		}	
+		
 		if (equals) {
 			newCardNumber();
 		}
@@ -139,11 +147,14 @@ public class Bank {
 		number = Math.random() * (Integer.MAX_VALUE - Integer.MAX_VALUE-10000000) + Integer.MAX_VALUE-10000000;
 		number = number * 1000000000;
 		boolean equals = false;
-		for (int i = 0; i < persons.size() && !equals; i++) {
-			if (persons.get(i).getAccountNumber() == number) {
-				equals = true;
+		for (int i = 0; i < HashTable.ARRAY_SIZE && !equals; i++) {
+			Person p = dataBase.search(i);
+			if (p != null) {
+				if (p.getAccountNumber() != (long) number) {
+					equals = true;
+				}
 			}
-		}
+		}	
 		if (equals) {
 			newCardNumber();
 		}
@@ -166,6 +177,40 @@ public class Bank {
 		} else {
 			throw new NothingToRedoException(p.getName());
 		}
+	}
+
+	/**
+	 * @return the dataBaseOut
+	 */
+	public HashTable<Integer, Person> getDataBaseOut() {
+		return dataBaseOut;
+	}
+
+	/**
+	 * @param dataBaseOut the dataBaseOut to set
+	 */
+	public void setDataBaseOut(HashTable<Integer, Person> dataBaseOut) {
+		this.dataBaseOut = dataBaseOut;
+	}
+	
+	public Person AttendNormalRow() throws NormalRowIsEmptyException {
+		Person p = null;
+		if (!normalRow.isEmpty()) {
+			p = normalRow.peek();
+		} else {
+			throw new NormalRowIsEmptyException();
+		}
+		return p;
+	}
+
+	public Person AttendPriorityRow() throws HeapUnderFlowException, PriorityRowIsEmptyException {
+		Person p = null;
+		if (priorityRow.getArraysize() != 0) {
+			p = priorityRow.extractMaxheap();
+		} else {
+			throw new PriorityRowIsEmptyException();
+		}
+		return p;
 	}
 	
 }
