@@ -124,7 +124,7 @@ public class Bank {
 		p.payCard(number, total, cuentaAhorros);
 	}
 	
-	public void addCard(Person p, int paymentDay, int fees, int quotas, double owe, double cardSpace) {
+	public void addCard(Person p, int paymentDay, double fees, int quotas, double owe, double cardSpace) {
 		long number = newCardNumber();
 		int cvc = newCVC();
 		p.addCard(number, paymentDay, cvc, fees, quotas, owe, cardSpace);
@@ -313,10 +313,13 @@ public class Bank {
 		switch (by) {								
 			case 1:
 				Person[] p = new Person[persons.size()];
+				int[] keys = new int[persons.size()];
 				for (int i = 0; i < p.length; i++) {
 					p[i] = persons.get(i);
+					keys[i] = 0;
 				}
-				p = orderByNameHeapSort(p);
+				p = orderByNameHeapSort(p, keys);
+				persons.clear();
 				for (int i = 0; i < p.length; i++) {
 					 persons.add(p[i]);
 				}
@@ -324,9 +327,10 @@ public class Bank {
 			case 2:
 				Person[] p1 = new Person[persons.size()];
 				for (int i = 0; i < p1.length; i++) {
-					p1[i] = persons.get(i);
+					 p1[i] = persons.get(i);
 				}
 				p1 = orderByIdMergeSort(p1);
+				persons.clear();
 				for (int i = 0; i < p1.length; i++) {
 					 persons.add(p1[i]);
 				}
@@ -428,13 +432,20 @@ public class Bank {
 		return a;
 	}
 
-	private Person[] orderByNameHeapSort(Person[] p) {
+	private Person[] orderByNameHeapSort(Person[] p, int[] keys) {
 		
 		Heap<Person> np = new Heap<Person>(0, 0);
+		np.setKeys(keys);
 		np.setElements(p);
 		np.heapSort();	
-		persons.clear();
 		return np.getElements();
 	}
+
+	@Override
+	public String toString() {
+		return persons + "";
+	}
+	
+	
 	
 }

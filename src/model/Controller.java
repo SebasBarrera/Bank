@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 import customExceptions.ActionsOnInactiveException;
@@ -27,13 +26,22 @@ public class Controller {
 		sc = new Scanner(System.in);
 		
 		control = new Bank();
-		Calendar ing = Calendar.getInstance();
-		int paymentDate = 10;
-		ing.set(2016, 6, 15);
-		ArrayList<Card> cards = new ArrayList<Card>();
-		Card card1 = new Card(765432, paymentDate, 234, 92, 48, 1000000.0, 2000000.0);
-		cards.add(card1);
-		control.addPerson("Jon Z", 14793, cards, ing, 19, true, 1, false);
+		Calendar c1 = Calendar.getInstance();
+		control.addPerson("Juan Sebastián Barrera Pulido", 1144105003, null, c1, 21, false, Person.MALE, false);
+		control.addCard(control.getPersons().get(0), 25, 1.8, 6, 2000000.0, 3000000.0);
+		
+		Calendar c2 = Calendar.getInstance();
+		c2.set(2020, Calendar.AUGUST, 22);
+		control.addPerson("Jhon Arboleda", 64236302, null, c2, 18, false, Person.MALE, false);
+		control.addCard(control.getPersons().get(1), 18, 2.0, 6, 500000.0, 2000000.0);
+		control.addCard(control.getPersons().get(1), 15, 1.2, 12, 5000000.0, 200000000.0);
+		
+		Calendar c3 = Calendar.getInstance();
+		c2.set(2020, Calendar.OCTOBER, 22);
+		control.addPerson("Alejandro García", 8763435, null, c3, 20, false, Person.MALE, false);
+		control.addCard(control.getPersons().get(2), 5, 2.4, 18, 2000000.0, 2000000.0);
+		control.addCard(control.getPersons().get(2), 5, 2.1, 24, 8000000.0, 100000000.0);
+		control.addCard(control.getPersons().get(2), 5, 2.1, 24, 2900000.0, 300000000.0);
 	}
 	
 	public void addToRow() throws AreadyAddedIdException {
