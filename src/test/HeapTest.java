@@ -232,10 +232,11 @@ class HeapTest {
 		Integer[] elements = {4};
 		Integer[] keys = {2};
 		assertEquals(1, heap.getArraysize());
-		Integer.compare(elements[0], heap.getElements()[0]);
 		
+		assertEquals(elements[0], (Integer) heap.getElements()[0]);
+		assertTrue(Integer.compare(elements[0], heap.getElements()[0]) == 0);		
 		assertTrue(elements[0].compareTo((int)heap.getElements()[0].intValue())== 0);
-		assertEquals(elements[0], heap.getElements()[0]);
+		
 		assertEquals(heap.getElements()[0], elements[0]);
 		assertEquals(keys[0], heap.getKeys()[0]);
 		heap.priorityInsert(9, 6);
