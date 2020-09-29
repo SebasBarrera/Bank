@@ -20,7 +20,6 @@ import dataStructure.*;
 
 public class Bank {
 	
-	private Person[] p;
 	private ArrayList<Person> persons;
 	private Heap<Person> priorityRow;
 	private Queue<Person> normalRow;
@@ -205,6 +204,90 @@ public class Bank {
 		this.dataBaseOut = dataBaseOut;
 	}
 	
+	/**
+	 * @return the persons
+	 */
+	public ArrayList<Person> getPersons() {
+		return persons;
+	}
+
+	/**
+	 * @param persons the persons to set
+	 */
+	public void setPersons(ArrayList<Person> persons) {
+		this.persons = persons;
+	}
+
+	/**
+	 * @return the priorityRow
+	 */
+	public Heap<Person> getPriorityRow() {
+		return priorityRow;
+	}
+
+	/**
+	 * @param priorityRow the priorityRow to set
+	 */
+	public void setPriorityRow(Heap<Person> priorityRow) {
+		this.priorityRow = priorityRow;
+	}
+
+	/**
+	 * @return the normalRow
+	 */
+	public Queue<Person> getNormalRow() {
+		return normalRow;
+	}
+
+	/**
+	 * @param normalRow the normalRow to set
+	 */
+	public void setNormalRow(Queue<Person> normalRow) {
+		this.normalRow = normalRow;
+	}
+
+	/**
+	 * @return the dataBase
+	 */
+	public HashTable<Integer, Person> getDataBase() {
+		return dataBase;
+	}
+
+	/**
+	 * @param dataBase the dataBase to set
+	 */
+	public void setDataBase(HashTable<Integer, Person> dataBase) {
+		this.dataBase = dataBase;
+	}
+
+	/**
+	 * @return the undo
+	 */
+	public Stack<Person> getUndo() {
+		return undo;
+	}
+
+	/**
+	 * @param undo the undo to set
+	 */
+	public void setUndo(Stack<Person> undo) {
+		this.undo = undo;
+	}
+
+	/**
+	 * @return the redo
+	 */
+	public Stack<Person> getRedo() {
+		return redo;
+	}
+
+	/**
+	 * @param redo the redo to set
+	 */
+	public void setRedo(Stack<Person> redo) {
+		this.redo = redo;
+	}
+	
 	public Person AttendNormalRow() throws NormalRowIsEmptyException {
 		Person p = null;
 		if (!normalRow.isEmpty()) {
@@ -225,78 +308,63 @@ public class Bank {
 		return p;
 	}
 	
-	public Person[] order(int by) { // by es como se arreglara, 1 heapsort nombre, 2 mergesort cedula, 3 quicksort tiempor en orga, 4 bublesort monto
-		p = castToArray();					
+	public void order(int by) { // by es como se arreglara, 1 heapsort nombre, 2 mergesort cedula, 3 quicksort tiempor en orga, 4 bublesort monto					
 		switch (by) {								
 			case 1:
-				p = orderByNameHeapSort(p);
+				orderByNameHeapSort();
 			break;
 			case 2:
-				p = orderByIdMergeSort(p);
+				orderByIdMergeSort();
 			break;
 			case 3:
-				p = orderByTimeQuickSort(p);
+				orderByTimeQuickSort();
 			break;
 			case 4:
-				p = orderByAmountBubleSort(p);
+				orderByAmountBubleSort();
 			break;
 		}
-		return p;
 	}
-	private void swap(Person[] a, int i, int j) {
-		Person tmp = a[i];
-		a[i] = a[j];
-		a[j] = tmp;
+	private void swap(int i, int j) {
+		Person tmp = persons.get(i);
+		persons.set(i, persons.get(j));
+		persons.set(j, tmp);
 	}
-	private Person[] orderByAmountBubleSort(Person[] p) {
-		int n = p.length;
+	private void orderByAmountBubleSort() {
+		int n = persons.size();
 		for(int i = 0; i < n; i++) {
 			for(int j = 1; j < (n-i); j++) {
-				if(p[j-1].compareByAmount(p[j]) > 0) {
-					swap(p, i, j);
+				if(persons.get(j-1).compareByAmount(persons.get(j)) > 0) {
+					swap(i, j);
 				}
 			}
 		}
-		return p;
+		
 	}
 
-	private Person[] orderByTimeQuickSort(Person[] p) {
+
+
+	private void orderByTimeQuickSort() {
 		// TODO Auto-generated method stub
-		return p;
+		
 	}
 
-	private Person[] orderByIdMergeSort(Person[] p) {
+	private void orderByIdMergeSort() {
 		// TODO Auto-generated method stub
-		return p;
+		
 	}
 
-	private Person[] orderByNameHeapSort(Person[] p) {
-		Heap<Person> np = new Heap<Person>(0, 0);
-		np.setElements(p);
-		np.heapSort();	
-		return np.getElements();
-	}
-
-	public Person[] castToArray() {
+	private void orderByNameHeapSort() {
 		Person[] p = new Person[persons.size()];
 		for (int i = 0; i < p.length; i++) {
 			p[i] = persons.get(i);
 		}
-		return p;
-	}
-
-	/**
-	 * @return the p
-	 */
-	public Person[] getP() {
-		return p;
-	}
-
-	/**
-	 * @param p the p to set
-	 */
-	public void setP(Person[] p) {
-		this.p = p;
+		Heap<Person> np = new Heap<Person>(0, 0);
+		np.setElements(p);
+		np.heapSort();	
+		persons.clear();
+		for (int i = 0; i < p.length; i++) {
+			 persons.add(np.getElements()[i]);
+		}
 	}
 	
 }
