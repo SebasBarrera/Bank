@@ -338,19 +338,85 @@ public class Bank {
 				}
 			}
 		}
-		
 	}
-
-
 
 	private void orderByTimeQuickSort() {
-		// TODO Auto-generated method stub
 		
+		int n = persons.size();
+		qsort(0, n-1);
 	}
-
+	private void qsort(int lo, int hi) {
+		if(lo < hi) {
+			int p = partition(lo, hi);
+			qsort(lo, p-1);
+			qsort(p+1, hi);
+		}
+	}
+	private int partition(int lo, int hi) {
+		Person pivot = persons.get(hi);
+		int i = lo;
+		for(int j = lo; j < hi; j++) {
+			if(persons.get(j).compareByIngress(pivot) < 0) {
+				swap(i, j);
+				i++;
+			}
+		}
+		swap(i, hi);
+		return i;
+	}
+	
 	private void orderByIdMergeSort() {
-		// TODO Auto-generated method stub
-		
+		Person[] a = new Person[persons.size()];
+		for (int i = 0; i < a.length; i++) {
+			a[i] = persons.get(i);
+		}
+		int n = a.length;
+		Person[] b = new Person[n];
+		mSort(a, 0,n-1, b);
+		persons.clear();
+		for (int i = 0; i < a.length; i++) {
+			 persons.add(a[i]);
+		}
+	}
+	
+	private Person[] mSort(Person[] a, int lo, int hi, Person[] b) {
+		if(lo < hi) {
+			int mid = (lo+hi)/2;
+			mSort(a, lo, mid, b);
+			mSort(a, mid+1, hi, b);
+			merge(a, lo, mid, hi, b);
+		}
+		return a;
+	}
+	
+	private Person[] merge(Person[] a, int lo, int mid, int hi, Person[] b) {
+		int i = lo;
+		int j = mid+1;
+		int k = lo;
+		while(i<=mid && j <= hi) {
+			if(a[i].compareById(a[j]) < 0) {
+				b[k] = a[i];
+				i++;
+			}else {
+				b[k] = a[j];
+				j++;
+			}
+			k++;
+		}
+		while(i <= mid) {
+			b[k] = a[i];
+			i++;
+			k++;
+		}
+		while(j <= hi) {
+			b[k] = a[j];
+			j++;
+			k++;
+		}
+		for(k=lo; k <= hi; k++) {
+			a[k] = b[k];
+		}
+		return a;
 	}
 
 	private void orderByNameHeapSort() {
