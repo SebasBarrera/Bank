@@ -319,7 +319,6 @@ public class Person implements Comparable<Person>{
 	
 	public void cancelAccount() throws AlreadyInactiveException {
 		if (activeAccount) {
-			amountAccount = 0;
 			activeAccount = false;
 		} else {
 			throw new AlreadyInactiveException(name, accountNumber);
