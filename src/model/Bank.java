@@ -19,6 +19,8 @@ import dataStructure.*;
 
 public class Bank {
 	
+	private Person[] p;
+	private ArrayList<Person> persons;
 	private Heap<Person> priorityRow;
 	private Queue<Person> normalRow;
 	private HashTable<Integer, Person> dataBase;
@@ -33,6 +35,7 @@ public class Bank {
 		dataBaseOut = new HashTable<>();
 		undo = new Stack<>();
 		redo = new Stack<>();
+		persons = new ArrayList<>();
 	}
 	
 	public void addPerson(String name, int id, ArrayList<Card> cards, Calendar ing, 
@@ -42,7 +45,9 @@ public class Bank {
 			throw new AreadyAddedIdException(id, there.getName());
 		}
 		long ac = newAccountNumber();
-		dataBase.insert(id, new Person(name, id, ac, cards, ing, age, invalid, gender, pregnated));
+		Person p = new Person(name, id, ac, cards, ing, age, invalid, gender, pregnated);
+		dataBase.insert(id, p);
+		persons.add(p);
 	}
 	
 	
@@ -99,6 +104,7 @@ public class Bank {
 		dataBaseOut.insert(p.getId(), p);
 		p.cancelAccount();
 		dataBase.delete(p.getId());
+		persons.remove(p);
 	}
 	
 	/*public void activeAccount(Person p) throws AlreadyActiveException {
@@ -211,6 +217,67 @@ public class Bank {
 			throw new PriorityRowIsEmptyException();
 		}
 		return p;
+	}
+	
+	public Person[] order(int by, int criterio) { // by es como se arreglara, 1 heapsort, 2 mergesort, 3 quicksort, 4 bublesort
+		p = castToArray();						// criterio indica por lo que se organi
+		switch (by) {								// 1 Nombre, 2 Cedula, 3 tiempo en la orga, 4 monto
+			case 1:
+				p = orderByHeapSort(p, criterio);
+			break;
+			case 2:
+				p = orderByMergeSort(p, criterio);
+			break;
+			case 3:
+				p = orderByQuickSort(p, criterio);
+			break;
+			case 4:
+				p = orderByBubleSort(p, criterio);
+			break;
+		}
+		return p;
+	}
+	
+	private Person[] orderByBubleSort(Person[] p, int criterio) {
+		// TODO Auto-generated method stub
+		return p;
+	}
+
+	private Person[] orderByQuickSort(Person[] p, int criterio) {
+		// TODO Auto-generated method stub
+		return p;
+	}
+
+	private Person[] orderByMergeSort(Person[] p, int criterio) {
+		// TODO Auto-generated method stub
+		return p;
+	}
+
+	private Person[] orderByHeapSort(Person[] p, int criterio) {
+		// TODO Auto-generated method stub
+		return p;
+	}
+
+	public Person[] castToArray() {
+		Person[] p = new Person[persons.size()];
+		for (int i = 0; i < p.length; i++) {
+			p[i] = persons.get(i);
+		}
+		return p;
+	}
+
+	/**
+	 * @return the p
+	 */
+	public Person[] getP() {
+		return p;
+	}
+
+	/**
+	 * @param p the p to set
+	 */
+	public void setP(Person[] p) {
+		this.p = p;
 	}
 	
 }

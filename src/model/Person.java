@@ -214,11 +214,46 @@ public class Person implements Comparable<Person>{
 
 
 	@Override
-	public int compareTo(Person o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Person p) {
+		int i = 0;
+		if (name.compareTo(p.name) > 0) {
+			i = 1;
+		} else if (name.compareTo(p.name) < 1) {
+			i = -1;
+		}
+		return i;
 	}
-
+	
+	public int compareById(Person p) {
+		int i = 0;
+		if (id > p.id) {
+			i = 1;
+		} else if (id < p.id) {
+			i = -1;
+		}
+		return i;
+	}
+	
+	public int compareByIngress(Person p) {
+		int i = 0;
+		if (ingress.compareTo(p.ingress) > 0) {
+			i = 1;
+		} else if (ingress.compareTo(p.ingress) < 1) {
+			i = -1;
+		}
+		return i;
+	}
+	
+	public int compareByAmount(Person p) {
+		int i = 0;
+		if (totalDebt > p.totalDebt) {
+			i = 1;
+		} else if (totalDebt < p.totalDebt) {
+			i = -1;
+		}
+		return i;
+	}
+	
 	/**
 	 * @return the canUndoActions
 	 */
@@ -232,9 +267,6 @@ public class Person implements Comparable<Person>{
 	public void setCanUndoActions(int canUndoActions) {
 		this.canUndoActions = canUndoActions;
 	}
-	
-	
-
 	
 	/**
 	 * @return the amountAccount
