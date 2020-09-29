@@ -105,18 +105,15 @@ public class Bank {
 		undo.push(p);
 		
 		p.activeAccount();
-<<<<<<< HEAD
 	}
+	*/
+	
 	/**
 	 * description you can only pay the full card or the fee
-	 * @param total: If total is true pay the entire card, if not pay a fee
+	 * @param total If total is true pay the entire card, if not pay a fee
+	 * @param cuentaAhorro If cuentaAhorros is true pay with savings account, if not pay cash
 	*/
-	public void payCard(Person p, long number, boolean total) throws NotFoundCardException, AlreadyPaidException {
-=======
-	}*/
-	
 	public void payCard(Person p, long number, boolean total, boolean cuentaAhorros) throws NotFoundCardException, AlreadyPaidException, AlreadyInactiveException, NotEnoughtMoneyException, ActionsOnInactiveException {// si total es true paga toda la tarjeta, si no paga una cuota
->>>>>>> baa9d7796573ae25b2873276bf32e3be88a3c3b0
 		undo.push(p);
 		p.payCard(number, total, cuentaAhorros);
 	}
