@@ -216,7 +216,6 @@ public class Person implements Comparable<Person>{
 		totalDebt = amount;
 	}
 
-
 	@Override
 	public int compareTo(Person p) {
 		int i = 0;
@@ -361,8 +360,7 @@ public class Person implements Comparable<Person>{
 			setTotalDebt();
 		} else {
 			throw new ActionsOnInactiveException(name, accountNumber);
-		}
-		
+		}	
 	}
 	
 	public Card searchCard(long number) throws NotFoundCardException {
@@ -379,6 +377,4 @@ public class Person implements Comparable<Person>{
 		}
 		return theCard;
 	}
-
-
 }
