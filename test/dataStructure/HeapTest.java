@@ -1,4 +1,4 @@
-package test;
+package dataStructure;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import customExceptions.BiggerKeyException;
 import customExceptions.HeapUnderFlowException;
 import customExceptions.SmallerKeyException;
-import dataStructure.Heap;
 
 class HeapTest {
 

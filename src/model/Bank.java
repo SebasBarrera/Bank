@@ -312,10 +312,24 @@ public class Bank {
 	public void order(int by) { // by es como se arreglara, 1 heapsort nombre, 2 mergesort cedula, 3 quicksort tiempor en orga, 4 bublesort monto					
 		switch (by) {								
 			case 1:
-				orderByNameHeapSort();
+				Person[] p = new Person[persons.size()];
+				for (int i = 0; i < p.length; i++) {
+					p[i] = persons.get(i);
+				}
+				p = orderByNameHeapSort(p);
+				for (int i = 0; i < p.length; i++) {
+					 persons.add(p[i]);
+				}
 			break;
 			case 2:
-				orderByIdMergeSort();
+				Person[] p1 = new Person[persons.size()];
+				for (int i = 0; i < p1.length; i++) {
+					p1[i] = persons.get(i);
+				}
+				p1 = orderByIdMergeSort(p1);
+				for (int i = 0; i < p1.length; i++) {
+					 persons.add(p1[i]);
+				}
 			break;
 			case 3:
 				orderByTimeQuickSort();
@@ -366,18 +380,12 @@ public class Bank {
 		return i;
 	}
 	
-	private void orderByIdMergeSort() {
-		Person[] a = new Person[persons.size()];
-		for (int i = 0; i < a.length; i++) {
-			a[i] = persons.get(i);
-		}
+	private Person[] orderByIdMergeSort(Person[] a) {
+		
 		int n = a.length;
 		Person[] b = new Person[n];
-		mSort(a, 0,n-1, b);
-		persons.clear();
-		for (int i = 0; i < a.length; i++) {
-			 persons.add(a[i]);
-		}
+		a = mSort(a, 0,n-1, b);
+		return a;
 	}
 	
 	private Person[] mSort(Person[] a, int lo, int hi, Person[] b) {
@@ -420,18 +428,13 @@ public class Bank {
 		return a;
 	}
 
-	private void orderByNameHeapSort() {
-		Person[] p = new Person[persons.size()];
-		for (int i = 0; i < p.length; i++) {
-			p[i] = persons.get(i);
-		}
+	private Person[] orderByNameHeapSort(Person[] p) {
+		
 		Heap<Person> np = new Heap<Person>(0, 0);
 		np.setElements(p);
 		np.heapSort();	
 		persons.clear();
-		for (int i = 0; i < p.length; i++) {
-			 persons.add(np.getElements()[i]);
-		}
+		return np.getElements();
 	}
 	
 }

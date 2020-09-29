@@ -1,8 +1,8 @@
-package test;
+package dataStructure;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import dataStructure.HashTable;
 
 class HashTableTest {
 
