@@ -7,7 +7,7 @@ public class Card {
 	private long number;
 	private int paymentDay; // indica el limite dia del mes en el cual pagara la tarjeta
 	private int cvc;
-	private int fees; // interes periodico mensual vencido
+	private double fees; // interes periodico mensual vencido
 	private int quota; // nº cuotas
 	private double aliquot; //valor de la alicuota
 	private double owe;// cuanto debe de la tarjeta
@@ -20,7 +20,7 @@ public class Card {
 	 * @param cvc
 	 * @param dueDate
 	 */
-	public Card(long number, int paymentDay, int cvc, int fees, int quota, double owe, double cardSpace) {
+	public Card(long number, int paymentDay, int cvc, double fees, int quota, double owe, double cardSpace) {
 		super();
 		this.number = number;
 		this.paymentDay = paymentDay;
@@ -85,11 +85,11 @@ public class Card {
 		this.cvc = cvc;
 	}
 
-	public int getFees() {
+	public double getFees() {
 		return fees;
 	}
 
-	public void setFees(int fees) {
+	public void setFees(double fees) {
 		this.fees = fees;
 	}
 

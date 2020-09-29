@@ -57,8 +57,12 @@ public class Person implements Comparable<Person>{
 		activeAccount = true;
 	}
 	
-	public void addCard(long number, int paymentDate, int cvc, int fees, int quota, double owe, double cardSpace) {
+	public void addCard(long number, int paymentDate, int cvc, double fees, int quota, double owe, double cardSpace) {
+		if (cards == null) {
+			cards = new ArrayList<>();
+		}
 		cards.add(new Card(number, paymentDate, cvc, fees, quota, owe, cardSpace));
+		setTotalDebt();
 	}
 	
 	public boolean searchCardToCreate(long number) {
@@ -376,4 +380,11 @@ public class Person implements Comparable<Person>{
 		}
 		return theCard;
 	}
+
+	@Override
+	public String toString() {
+		return "\nname=" + name + ", id=" + id + ", totalOwe=" + Math.round(totalDebt) + "$, ingressDate=" + ingress.get(Calendar.YEAR) + "/" + (ingress.get(Calendar.MONTH)+1) + "/" + ingress.get(Calendar.DAY_OF_MONTH);
+	}
+	
+	
 }
