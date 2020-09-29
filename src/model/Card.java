@@ -12,7 +12,7 @@ public class Card {
 	private double aliquot; //valor de la alicuota
 	private double owe;// cuanto debe de la tarjeta
 	private double cardSpace; // cupo de la tarjeta
-	public boolean isPaid; //indica si ya fue pagada en su totalidad o no
+	private boolean isPaid; //indica si ya fue pagada en su totalidad o no
 	
 	/**
 	 * @param number

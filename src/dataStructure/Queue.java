@@ -18,6 +18,7 @@ public class Queue<E> implements IQueue<E>{
 			newE.setPrev(back);
 		} else {
 			setFront(newE);
+			setback(newE);
 		}
 		back = newE;
 	}
@@ -90,7 +91,6 @@ public class Queue<E> implements IQueue<E>{
 	/**
 	 * @param back the back to set
 	 */
-	@SuppressWarnings("unused")
 	private void setback(Node<E> back) {
 		this.back = back;
 	}	
