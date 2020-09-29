@@ -260,8 +260,10 @@ public class Bank {
 	}
 
 	private Person[] orderByNameHeapSort(Person[] p) {
-		// TODO Auto-generated method stub
-		return p;
+		Heap<Person> np = new Heap<Person>(0, 0);
+		np.setElements(p);
+		np.heapSort();	
+		return np.getElements();
 	}
 
 	public Person[] castToArray() {
