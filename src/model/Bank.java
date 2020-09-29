@@ -219,41 +219,41 @@ public class Bank {
 		return p;
 	}
 	
-	public Person[] order(int by, int criterio) { // by es como se arreglara, 1 heapsort, 2 mergesort, 3 quicksort, 4 bublesort
-		p = castToArray();						// criterio indica por lo que se organi
-		switch (by) {								// 1 Nombre, 2 Cedula, 3 tiempo en la orga, 4 monto
+	public Person[] order(int by) { // by es como se arreglara, 1 heapsort nombre, 2 mergesort cedula, 3 quicksort tiempor en orga, 4 bublesort monto
+		p = castToArray();					
+		switch (by) {								
 			case 1:
-				p = orderByHeapSort(p, criterio);
+				p = orderByNameHeapSort(p);
 			break;
 			case 2:
-				p = orderByMergeSort(p, criterio);
+				p = orderByIdMergeSort(p);
 			break;
 			case 3:
-				p = orderByQuickSort(p, criterio);
+				p = orderByTimeQuickSort(p);
 			break;
 			case 4:
-				p = orderByBubleSort(p, criterio);
+				p = orderByAmountBubleSort(p);
 			break;
 		}
 		return p;
 	}
 	
-	private Person[] orderByBubleSort(Person[] p, int criterio) {
+	private Person[] orderByAmountBubleSort(Person[] p) {
 		// TODO Auto-generated method stub
 		return p;
 	}
 
-	private Person[] orderByQuickSort(Person[] p, int criterio) {
+	private Person[] orderByTimeQuickSort(Person[] p) {
 		// TODO Auto-generated method stub
 		return p;
 	}
 
-	private Person[] orderByMergeSort(Person[] p, int criterio) {
+	private Person[] orderByIdMergeSort(Person[] p) {
 		// TODO Auto-generated method stub
 		return p;
 	}
 
-	private Person[] orderByHeapSort(Person[] p, int criterio) {
+	private Person[] orderByNameHeapSort(Person[] p) {
 		// TODO Auto-generated method stub
 		return p;
 	}
