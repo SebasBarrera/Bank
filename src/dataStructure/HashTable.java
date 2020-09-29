@@ -49,11 +49,6 @@ public class HashTable<K, V> implements IHashTable<K, V>{
 			}
 		}
 	}
-	
-	
-	
-
-
 
 	@Override
 	public void delete(K key) {

@@ -20,6 +20,8 @@ import dataStructure.*;
 
 public class Bank {
 	
+	private Person[] p;
+	private ArrayList<Person> persons;
 	private Heap<Person> priorityRow;
 	private Queue<Person> normalRow;
 	private HashTable<Integer, Person> dataBase;
@@ -34,6 +36,7 @@ public class Bank {
 		dataBaseOut = new HashTable<>();
 		undo = new Stack<>();
 		redo = new Stack<>();
+		persons = new ArrayList<>();
 	}
 	
 	public void addPerson(String name, int id, ArrayList<Card> cards, Calendar ing, 
@@ -43,7 +46,9 @@ public class Bank {
 			throw new AreadyAddedIdException(id, there.getName());
 		}
 		long ac = newAccountNumber();
-		dataBase.insert(id, new Person(name, id, ac, cards, ing, age, invalid, gender, pregnated));
+		Person p = new Person(name, id, ac, cards, ing, age, invalid, gender, pregnated);
+		dataBase.insert(id, p);
+		persons.add(p);
 	}
 	
 	
@@ -99,6 +104,7 @@ public class Bank {
 		dataBaseOut.insert(p.getId(), p);
 		p.cancelAccount();
 		dataBase.delete(p.getId());
+		persons.remove(p);
 	}
 	
 	/*public void activeAccount(Person p) throws AlreadyActiveException {
@@ -217,6 +223,67 @@ public class Bank {
 			throw new PriorityRowIsEmptyException();
 		}
 		return p;
+	}
+	
+	public Person[] order(int by) { // by es como se arreglara, 1 heapsort nombre, 2 mergesort cedula, 3 quicksort tiempor en orga, 4 bublesort monto
+		p = castToArray();					
+		switch (by) {								
+			case 1:
+				p = orderByNameHeapSort(p);
+			break;
+			case 2:
+				p = orderByIdMergeSort(p);
+			break;
+			case 3:
+				p = orderByTimeQuickSort(p);
+			break;
+			case 4:
+				p = orderByAmountBubleSort(p);
+			break;
+		}
+		return p;
+	}
+	
+	private Person[] orderByAmountBubleSort(Person[] p) {
+		// TODO Auto-generated method stub
+		return p;
+	}
+
+	private Person[] orderByTimeQuickSort(Person[] p) {
+		// TODO Auto-generated method stub
+		return p;
+	}
+
+	private Person[] orderByIdMergeSort(Person[] p) {
+		// TODO Auto-generated method stub
+		return p;
+	}
+
+	private Person[] orderByNameHeapSort(Person[] p) {
+		// TODO Auto-generated method stub
+		return p;
+	}
+
+	public Person[] castToArray() {
+		Person[] p = new Person[persons.size()];
+		for (int i = 0; i < p.length; i++) {
+			p[i] = persons.get(i);
+		}
+		return p;
+	}
+
+	/**
+	 * @return the p
+	 */
+	public Person[] getP() {
+		return p;
+	}
+
+	/**
+	 * @param p the p to set
+	 */
+	public void setP(Person[] p) {
+		this.p = p;
 	}
 	
 }
