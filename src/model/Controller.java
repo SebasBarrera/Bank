@@ -127,7 +127,7 @@ public class Controller {
 	public void addPerson(String name, int id) throws AreadyAddedIdException {
 		//siempre empieza sin tarjetas
 		Calendar ing = Calendar.getInstance();
-		int age = sc.nextInt(); sc.nextLine(); //cuantos años
+		int age = sc.nextInt(); sc.nextLine(); //cuantos anios
 		int invalido = sc.nextInt(); sc.nextLine(); // 0 si es invalido, 1 si no
 		boolean invalid;
 		if (invalido == 0) {

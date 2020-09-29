@@ -17,6 +17,7 @@ import customExceptions.SmallerKeyException;
 import customExceptions.UserIsNotRegiterException;
 import dataStructure.*;
 
+
 public class Bank {
 	
 	private Person[] p;
@@ -77,7 +78,6 @@ public class Bank {
 			} else {
 				priorityRow.priorityInsert(priority, p);
 			}
-			
 		}		
 	}
 
@@ -111,8 +111,14 @@ public class Bank {
 		undo.push(p);
 		
 		p.activeAccount();
-	}*/
+	}
+	*/
 	
+	/**
+	 * description you can only pay the full card or the fee
+	 * @param total If total is true pay the entire card, if not pay a fee
+	 * @param cuentaAhorro If cuentaAhorros is true pay with savings account, if not pay cash
+	*/
 	public void payCard(Person p, long number, boolean total, boolean cuentaAhorros) throws NotFoundCardException, AlreadyPaidException, AlreadyInactiveException, NotEnoughtMoneyException, ActionsOnInactiveException {// si total es true paga toda la tarjeta, si no paga una cuota
 		undo.push(p);
 		p.payCard(number, total, cuentaAhorros);
