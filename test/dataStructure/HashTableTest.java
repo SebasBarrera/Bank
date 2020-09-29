@@ -62,7 +62,6 @@ class HashTableTest {
 	@Test
 	void testDelete1() {
 		setupStage1();
-		assertEquals(hashTable.search(82), -4134);
 		hashTable.delete(82);
 		assertEquals(hashTable.search(82), null, "The hashTable is not deleting as well, the -4134 still here");
 	}
@@ -70,7 +69,6 @@ class HashTableTest {
 	@Test
 	void testDelete2() {
 		setupStage2();
-		assertEquals(hashTable.search(-1820), 7);
 		hashTable.delete(-1820);
 		assertEquals(hashTable.search(-1820), null, "The hashTable is not deleting, the value 7 still here");
 	}
