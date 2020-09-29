@@ -338,12 +338,14 @@ public class Person implements Comparable<Person>{
 			if (total) {
 				if (cuentaAhorros) {
 					withdrawals(c.getOwe());
+					c.setOwe(0);
 				} else {
 					c.payTotal();
 				}
 			} else {
 				if (cuentaAhorros) {
 					withdrawals(c.getAliquot());
+					c.setOwe(c.getOwe() - c.getAliquot());
 				} else {
 					c.payNextQuote();
 				}
