@@ -54,7 +54,7 @@ public class Bank {
 	
 	public void addPersonToRow(int id, String name) throws SmallerKeyException, UserIsNotRegiterException {
 		int priority = 0;
-		Person p = searchHash(id, name);//busqyeda efectiva... hashtable?
+		Person p = searchHash(id, name);
 		if (p.getAge() >= Person.SENIOR) {
 			priority++;
 		}
