@@ -136,7 +136,7 @@ public class Card {
 	public void payNextQuote() throws AlreadyPaidException {
 		if (!isPaid) {
 			owe = owe - aliquot;
-			if (owe == 0) {
+			if (owe == 0) {	
 				isPaid = true;
 			}
 		} else {

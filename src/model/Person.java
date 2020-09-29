@@ -336,7 +336,7 @@ public class Person implements Comparable<Person>{
 	/**
 	 * description you can only pay the full card or the fee
 	 * @param total If total is true pay the entire card, if not pay a fee
-	 *  @param cuentaAhorro If cuentaAhorros is true pay with savings account, if not pay cash
+	 * @param cuentaAhorro If cuentaAhorros is true pay with savings account, if not pay cash
 	*/
 	public void payCard(long number, boolean total, boolean cuentaAhorros) throws NotFoundCardException, AlreadyPaidException, AlreadyInactiveException, NotEnoughtMoneyException, ActionsOnInactiveException {
 		if (activeAccount) {
