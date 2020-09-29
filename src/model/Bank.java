@@ -54,7 +54,7 @@ public class Bank {
 	
 	public void addPersonToRow(int id, String name) throws SmallerKeyException, UserIsNotRegiterException {
 		int priority = 0;
-		Person p = searchHash(id, name);//busqyeda efectiva... hashtable?
+		Person p = searchHash(id, name);
 		if (p.getAge() >= Person.SENIOR) {
 			priority++;
 		}
@@ -243,9 +243,20 @@ public class Bank {
 		}
 		return p;
 	}
-	
+	private void swap(Person[] a, int i, int j) {
+		Person tmp = a[i];
+		a[i] = a[j];
+		a[j] = tmp;
+	}
 	private Person[] orderByAmountBubleSort(Person[] p) {
-		// TODO Auto-generated method stub
+		int n = p.length;
+		for(int i = 0; i < n; i++) {
+			for(int j = 1; j < (n-i); j++) {
+				if(p[j-1].compareByAmount(p[j]) > 0) {
+					swap(p, i, j);
+				}
+			}
+		}
 		return p;
 	}
 
