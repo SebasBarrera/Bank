@@ -37,7 +37,7 @@ public class Controller {
 		control.addCard(control.getPersons().get(1), 15, 1.2, 12, 5000000.0, 200000000.0);
 		
 		Calendar c3 = Calendar.getInstance();
-		c2.set(2020, Calendar.OCTOBER, 22);
+		c3.set(2021, Calendar.OCTOBER, 22);
 		control.addPerson("Alejandro García", 8763435, null, c3, 20, false, Person.MALE, false);
 		control.addCard(control.getPersons().get(2), 5, 2.4, 18, 2000000.0, 2000000.0);
 		control.addCard(control.getPersons().get(2), 5, 2.1, 24, 8000000.0, 100000000.0);
