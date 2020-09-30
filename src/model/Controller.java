@@ -27,7 +27,7 @@ public class Controller {
 		
 		control = new Bank();
 		Calendar c1 = Calendar.getInstance();
-		control.addPerson("Juan Sebastián Barrera Pulido", 1144105003, null, c1, 21, false, Person.MALE, false);
+		control.addPerson("Juan Sebastian Barrera Pulido", 1144105003, null, c1, 21, false, Person.MALE, false);
 		control.addCard(control.getPersons().get(0), 25, 1.8, 6, 2000000.0, 3000000.0);
 		
 		Calendar c2 = Calendar.getInstance();
@@ -38,24 +38,14 @@ public class Controller {
 		
 		Calendar c3 = Calendar.getInstance();
 		c3.set(2021, Calendar.OCTOBER, 22);
-		control.addPerson("Alejandro García", 8763435, null, c3, 20, false, Person.MALE, false);
+		control.addPerson("Alejandro Garcia", 8763435, null, c3, 20, false, Person.MALE, false);
 		control.addCard(control.getPersons().get(2), 5, 2.4, 18, 2000000.0, 2000000.0);
 		control.addCard(control.getPersons().get(2), 5, 2.1, 24, 8000000.0, 100000000.0);
 		control.addCard(control.getPersons().get(2), 5, 2.1, 24, 2900000.0, 300000000.0);
 	}
 	
-	public void addToRow() throws AreadyAddedIdException {
-		String name = sc.nextLine();//INTERFAZ LOS PIDE
-		int id = sc.nextInt();sc.nextLine();//INTERFAZ LOS PIDE
-		try {
-			control.addPersonToRow(id, name);
-		} catch (SmallerKeyException e) {
-			e.getMessage();
-		} catch (UserIsNotRegiterException e) {
-			e.getMessage();
-			addPerson(name, id);
-		}
-		
+	public void addToRow(int id, String name) throws AreadyAddedIdException, SmallerKeyException, UserIsNotRegiterException {
+		control.addPersonToRow(id, name);
 	}
 	
 	public void AttendARow() throws UserIsNotRegiterException, ActionsOnInactiveException, NotEnoughtMoneyException, AlreadyInactiveException, AlreadyActiveException, NotFoundCardException, AlreadyPaidException, NothingToUndoException, NothingToRedoException, NormalRowIsEmptyException, HeapUnderFlowException, PriorityRowIsEmptyException {
@@ -132,26 +122,17 @@ public class Controller {
 		}
 	}
 	
-	public void addPerson(String name, int id) throws AreadyAddedIdException {
+	public void addPerson(String name, int id, int age, boolean disabled, int gender, boolean pregnated) throws AreadyAddedIdException {
 		//siempre empieza sin tarjetas
 		Calendar ing = Calendar.getInstance();
-		int age = sc.nextInt(); sc.nextLine(); //cuantos anios
-		int invalido = sc.nextInt(); sc.nextLine(); // 0 si es invalido, 1 si no
-		boolean invalid;
-		if (invalido == 0) {
-			invalid = true;
-		} else {
-			invalid = false;
-		}
-		int gender = sc.nextInt(); sc.nextLine(); // 0 si es invalido, 1 si es hombre
-		boolean pregnated = false;
-		if (gender == Person.FEMALE) {
-			int preg = sc.nextInt(); sc.nextLine(); // 0 si esta embarazada, 1 si no
-			if (preg == 0) {
-				pregnated = true;
-			}
-		}	
-		control.addPerson(name, id, null, ing, age, invalid, gender, pregnated);
+		control.addPerson(name, id, null, ing, age, disabled, gender, pregnated);
 	}
 	
+	public Person findUser(int id, String name) throws UserIsNotRegiterException {
+		return control.searchHash(id, name);
+	}
+	
+	public int getPriority(Person p) throws UserIsNotRegiterException {
+		return control.getPriority(p);
+	}
 }

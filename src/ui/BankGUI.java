@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 import customExceptions.AreadyAddedIdException;
+import customExceptions.SmallerKeyException;
+import customExceptions.UserIsNotRegiterException;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -20,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Controller;
@@ -50,6 +54,20 @@ public class BankGUI {
     private ListView<String> row1;
     @FXML
     private ListView<String> row2;
+    @FXML
+    private TextField addName;
+    @FXML
+    private TextField addId;
+    @FXML
+    private TextField addAge;
+    @FXML
+    private CheckBox addDisabled;
+    @FXML
+    private CheckBox addPregnant;
+    @FXML
+    private RadioButton maleAdd;
+    @FXML
+    private RadioButton femaleAdd;
 	
 	public BankGUI() {
 		try {
@@ -58,6 +76,7 @@ public class BankGUI {
 			e.getMessage();
 		}
 		initialize();
+		
 	}
 	
 	@FXML
@@ -133,12 +152,112 @@ public class BankGUI {
 	}
 	
 	@FXML
-	void signInAction(ActionEvent event) {
-//		TODO
+	void signInAction(ActionEvent event) throws AreadyAddedIdException, IOException {
+		try {
+			String idS = idField.getText();
+			int id = Integer.parseInt(idS);
+			String name = nameField.getText();
+			control.addToRow(id, name);
+			
+			if (control.getPriority(control.findUser(id, name)) == 0) {
+				row1.getItems().add(name);
+			}else {
+				row2.getItems().add(name);
+			}
+		} catch (SmallerKeyException e) {
+			e.getMessage();
+		} catch (UserIsNotRegiterException e) {
+			Alert addAcc = new Alert(AlertType.INFORMATION);
+			addAcc.setTitle("User is not register");
+			addAcc.setHeaderText("User is not register");
+			addAcc.setContentText("Push accept button to add him or close this window to cancel.");
+			
+			Optional<ButtonType> result = addAcc.showAndWait();
+			if(result.get() == ButtonType.OK) {
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddScreen.fxml"));
+				fxmlLoader.setController(this);
+				Parent add = fxmlLoader.load();			    	
+				Scene scene = new Scene(add);
+				Stage stage = new Stage();
+				stage.setScene(scene);
+				stage.setTitle("Form to add");
+				extraStage = stage;
+				stage.show();
+				addPregnant.setDisable(true);
+			}
+			
+		} catch (NumberFormatException e) {
+			Alert error = new Alert(AlertType.ERROR);
+			error.setTitle("Error");
+			error.setHeaderText("Make sure that in \"Citizenship id\" field are no characters but numbers");
+			error.showAndWait();
+			
+		}
+	}
+	
+	@FXML
+	void addUser(ActionEvent event) throws AreadyAddedIdException {
+		try {
+			String name = addName.getText();
+			String idS = addId.getText();
+			int id = Integer.parseInt(idS);
+			String ageS = addAge.getText();
+			int age = Integer.parseInt(ageS);
+			boolean disabled = addDisabled.isSelected();
+			boolean pregnant = addPregnant.isSelected();
+			int gender = 3;
+			if (maleAdd.isSelected()) {
+				gender = 1;
+			}else if(femaleAdd.isSelected()){
+				gender = 0;
+			}
+			
+			if (gender == 3 || name.equals("")) {
+				Alert error = new Alert(AlertType.ERROR);
+				error.setTitle("Fields are empty");
+				error.setHeaderText("Some fields are empty");
+				error.setContentText("Please fill the required fields");
+				error.showAndWait();
+			}
+			
+			control.addPerson(name, 
+					id, 
+					age, 
+					disabled,
+					gender, 
+					pregnant);
+			
+			Alert succes = new Alert(AlertType.INFORMATION);
+			succes.setTitle("Saves");
+			succes.setHeaderText("User added successfully");
+			succes.showAndWait();
+			
+			extraStage.close();
+		} catch (NumberFormatException e) {
+			Alert error = new Alert(AlertType.ERROR);
+			error.setTitle("Error");
+			error.setHeaderText("Make sure that in \"Citizenship id\" and \"Age\" fields are no characters but numbers");
+			error.showAndWait();
+		}
+	}
+	
+	@FXML
+	void changePregnantStatusM(ActionEvent e) {
+		if (maleAdd.isSelected()) {
+			addPregnant.setDisable(true);
+			addPregnant.setSelected(false);
+		}
+	}
+	
+	@FXML
+	void changePregnantStatusF(ActionEvent e) {
+		if (femaleAdd.isSelected()) {
+			addPregnant.setDisable(false);
+		}
 	}
 	
 	private void initialize() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }

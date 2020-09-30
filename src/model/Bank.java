@@ -52,8 +52,24 @@ public class Bank {
 	
 	
 	public void addPersonToRow(int id, String name) throws SmallerKeyException, UserIsNotRegiterException {
-		int priority = 0;
 		Person p = searchHash(id, name);
+		if (getPriority(p) == 0) {
+			normalRow.offer(p);
+		} else {
+			if (priorityRow.getArraysize() == 0) {
+				Person[] ps = new Person[1];
+				ps[0] = p;
+				priorityRow.setElements(ps);
+				int[] prio = new int[1];
+				prio[0] = getPriority(p);
+			} else {
+				priorityRow.priorityInsert(getPriority(p), p);
+			}
+		}		
+	}
+	
+	public int getPriority(Person p) throws UserIsNotRegiterException {
+		int priority = 0;
 		if (p.getAge() >= Person.SENIOR) {
 			priority++;
 		}
@@ -65,21 +81,10 @@ public class Bank {
 				priority++;
 			}
 		}
-		if (priority == 0) {
-			normalRow.offer(p);
-		} else {
-			if (priorityRow.getArraysize() == 0) {
-				Person[] ps = new Person[1];
-				ps[0] = p;
-				priorityRow.setElements(ps);
-				int[] prio = new int[1];
-				prio[0] = priority;
-			} else {
-				priorityRow.priorityInsert(priority, p);
-			}
-		}		
+		
+		return priority;
 	}
-
+	
 	public Person searchHash(int id, String name) throws UserIsNotRegiterException {
 		Person p = dataBase.search(id);
 		if (p == null) {
