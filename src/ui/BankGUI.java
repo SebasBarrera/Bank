@@ -6,6 +6,7 @@ import java.util.Optional;
 import customExceptions.AreadyAddedIdException;
 import customExceptions.SmallerKeyException;
 import customExceptions.UserIsNotRegiterException;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,10 +22,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Controller;
 import model.Person;
@@ -68,6 +70,8 @@ public class BankGUI {
     private RadioButton maleAdd;
     @FXML
     private RadioButton femaleAdd;
+    @FXML
+    private BorderPane tablePane;
 	
 	public BankGUI() {
 		try {
@@ -160,9 +164,9 @@ public class BankGUI {
 			control.addToRow(id, name);
 			
 			if (control.getPriority(control.findUser(id, name)) == 0) {
-				row1.getItems().add(name);
+				row1.getItems().add(control.findUser(id, name).getName());
 			}else {
-				row2.getItems().add(name);
+				row2.getItems().add(control.findUser(id, name).getName());
 			}
 		} catch (SmallerKeyException e) {
 			e.getMessage();
@@ -220,12 +224,7 @@ public class BankGUI {
 				error.showAndWait();
 			}
 			
-			control.addPerson(name, 
-					id, 
-					age, 
-					disabled,
-					gender, 
-					pregnant);
+			control.addPerson(name, id, age, disabled, gender, pregnant);
 			
 			Alert succes = new Alert(AlertType.INFORMATION);
 			succes.setTitle("Saves");
@@ -256,8 +255,19 @@ public class BankGUI {
 		}
 	}
 	
+	@FXML
+	public void loadUsersTable() {
+		ObservableList<Person> observableList;
+    	observableList = FXCollections.observableArrayList(control.getPersons());
+    	
+		usersTable.setItems(observableList);
+		nameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+		idColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("id"));
+		timeColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("ingress"));
+		amountColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("totalDebt"));
+	}
+	
 	private void initialize() {
-		
 		
 	}
 }

@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
 import customExceptions.ActionsOnInactiveException;
 import customExceptions.AlreadyInactiveException;
 import customExceptions.AlreadyPaidException;
@@ -216,7 +218,17 @@ public class Bank {
 	public ArrayList<Person> getPersons() {
 		return persons;
 	}
-
+	
+	public List<Person> getPersonList(){
+		ArrayList<Person> act = new ArrayList<Person>();
+		
+		for (int i = 0; i < persons.size(); i++) {
+			act.add(persons.get(i));
+		}
+		
+		return act;
+	}
+	
 	/**
 	 * @param persons the persons to set
 	 */

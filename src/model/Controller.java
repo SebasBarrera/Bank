@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
 import customExceptions.ActionsOnInactiveException;
 import customExceptions.AlreadyActiveException;
@@ -134,5 +135,9 @@ public class Controller {
 	
 	public int getPriority(Person p) throws UserIsNotRegiterException {
 		return control.getPriority(p);
+	}
+	
+	public List<Person> getPersons() {
+		return control.getPersonList();
 	}
 }
