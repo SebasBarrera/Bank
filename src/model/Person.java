@@ -28,6 +28,7 @@ public class Person implements Comparable<Person>{
 	private int gender;
 	private boolean pregnated;
 	private int canUndoActions;
+	private String dateOfIngress;
 	
 	
 	/**
@@ -55,6 +56,7 @@ public class Person implements Comparable<Person>{
 		this.pregnated = pregnated;
 		canUndoActions = 0;
 		activeAccount = true;
+		dateOfIngress();
 	}
 	
 	public void addCard(long number, int paymentDate, int cvc, double fees, int quota, double owe, double cardSpace) {
@@ -389,8 +391,24 @@ public class Person implements Comparable<Person>{
 	public String dateOfIngress() {
 		String msg = "";
 		msg = ingress.get(Calendar.YEAR) + "/" + (ingress.get(Calendar.MONTH)+1) + "/" + ingress.get(Calendar.DAY_OF_MONTH);
+		setDateOfIngress(msg);
 		return msg;
 	}
+
+	/**
+	 * @return the dateOfIngress
+	 */
+	public String getDateOfIngress() {
+		return dateOfIngress;
+	}
+
+	/**
+	 * @param dateOfIngress the dateOfIngress to set
+	 */
+	public void setDateOfIngress(String dateOfIngress) {
+		this.dateOfIngress = dateOfIngress;
+	}
+	
 	
 	
 }
