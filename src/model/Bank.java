@@ -199,6 +199,10 @@ public class Bank {
 			throw new NothingToRedoException(p.getName());
 		}
 	}
+	
+	public void takeItOutNormal(Person p) {
+		
+	}
 
 	/**
 	 * @return the dataBaseOut
@@ -452,7 +456,6 @@ public class Bank {
 	}
 
 	private Person[] orderByNameHeapSort(Person[] p, int[] keys) {
-		
 		Heap<Person> np = new Heap<Person>(0, 0);
 		np.setKeys(keys);
 		np.setElements(p);
