@@ -203,7 +203,7 @@ class HeapTest {
 	}
 	
 	@Test
-	void testIncreaseKey0() throws SmallerKeyException {
+	void testIncreaseKey0() {
 		setupStage0();
 		assertThrows(IndexOutOfBoundsException.class, ()->{heap.increaseKey(4, 9);});
 	}
@@ -232,7 +232,7 @@ class HeapTest {
 		Integer[] keys = {2};
 		assertEquals(1, heap.getArraysize());
 		
-		assertTrue(elements[0].compareTo((int)heap.getElements()[0].intValue())== 0);
+		assertTrue(elements[0].compareTo((Integer)heap.getElements()[0].intValue())== 0);
 		assertEquals(elements[0], heap.getElements()[0]);
 		assertEquals(heap.getElements()[0], elements[0]);
 		assertEquals(keys[0], heap.getKeys()[0]);
@@ -243,6 +243,5 @@ class HeapTest {
 		assertEquals(elements1[0], heap.getElements()[0]);
 		assertEquals(keys1[0], heap.getKeys()[0]);
 	}
-	
-	
+		
 }

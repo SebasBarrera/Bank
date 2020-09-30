@@ -383,7 +383,13 @@ public class Person implements Comparable<Person>{
 
 	@Override
 	public String toString() {
-		return "\nname=" + name + ", id=" + id + ", totalOwe=" + Math.round(totalDebt) + "$, ingressDate=" + ingress.get(Calendar.YEAR) + "/" + (ingress.get(Calendar.MONTH)+1) + "/" + ingress.get(Calendar.DAY_OF_MONTH);
+		return "\nname=" + name + ", id=" + id + ", totalOwe=" + Math.round(totalDebt) + "$, ingressDate=" + dateOfIngress();
+	}
+	
+	public String dateOfIngress() {
+		String msg = "";
+		msg = ingress.get(Calendar.YEAR) + "/" + (ingress.get(Calendar.MONTH)+1) + "/" + ingress.get(Calendar.DAY_OF_MONTH);
+		return msg;
 	}
 	
 	
