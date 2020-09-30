@@ -152,7 +152,7 @@ public class Bank {
 		boolean equals = false;
 		for (int i = 0; i < HashTable.ARRAY_SIZE && !equals; i++) {
 			Person p = dataBase.search(i);
-			if (p != null) {
+			if (p != null && p.getCards() != null) {
 				equals = p.searchCardToCreate((long)number);
 			}
 		}	
