@@ -64,11 +64,13 @@ public class Bank {
 				priorityRow.setElements(ps);
 				int[] prio = new int[1];
 				prio[0] = getPriority(p);
+				priorityRow.setKeys(prio);
 			} else {
 				priorityRow.priorityInsert(getPriority(p), p);
 			}
 		}		
 	}
+	
 	
 	public int getPriority(Person p) throws UserIsNotRegiterException {
 		int priority = 0;

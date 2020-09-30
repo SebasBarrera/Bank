@@ -7,6 +7,8 @@ import java.util.Calendar;
 import org.junit.jupiter.api.Test;
 
 import customExceptions.AreadyAddedIdException;
+import customExceptions.SmallerKeyException;
+import customExceptions.UserIsNotRegiterException;
 
 class BankTest {
 
@@ -16,12 +18,12 @@ class BankTest {
 		bank = new Bank();
 		
 		Calendar c1 = Calendar.getInstance();
-		bank.addPerson("Sebastián Barrera", 11441050, null, c1, 21, false, Person.MALE, false);
+		bank.addPerson("Sebastián Barrera", 11441050, null, c1, 71, false, Person.MALE, false);
 		bank.addCard(bank.getPersons().get(0), 25, 1.8, 6, 2000.0, 30000.0);
 		
 		Calendar c2 = Calendar.getInstance();
 		c2.set(2021, Calendar.JUNE, 22);
-		bank.addPerson("Jhon Arboleda    ", 64236302, null, c2, 18, false, Person.MALE, false);
+		bank.addPerson("Jhon Arboleda    ", 64236302, null, c2, 18, true, Person.MALE, false);
 		bank.addCard(bank.getPersons().get(1), 18, 2.0, 6, 5000.0, 20000.0);
 		bank.addCard(bank.getPersons().get(1), 15, 1.2, 12, 50000.0, 200000.0);
 		
@@ -83,6 +85,13 @@ class BankTest {
 			int j = i + 1;
 			assertTrue(bank.getPersons().get(j).compareByAmount(bank.getPersons().get(i)) >= 0);
 		}
+	}
+	
+	@Test
+	void addToQueues() throws AreadyAddedIdException, SmallerKeyException, UserIsNotRegiterException {
+		setupStage();
+		bank.addPersonToRow(11441050, "Sebastián Barrera");
+		bank.addPersonToRow(64236302, "Jhon Arboleda    ");
 	}
 	
 }
