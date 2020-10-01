@@ -238,9 +238,14 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 			tmpE[i] = elements[i];
 			tmpKeys[i] = keys[i];
 		}
-		setElements(tmpE);
+		setElements(tmpE, heapSize);
 		setKeys(tmpKeys);
 		arraysize = newArraySize;
+	}
+
+	private void setElements(E[] tmpE, int heapSize2) {
+		setArraysize(tmpE.length);
+		elements = tmpE;	
 	}
 
 }

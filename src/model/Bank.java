@@ -152,7 +152,7 @@ public class Bank {
 		boolean equals = false;
 		for (int i = 0; i < HashTable.ARRAY_SIZE && !equals; i++) {
 			Person p = dataBase.search(i);
-			if (p != null) {
+			if (p != null && p.getCards() != null) {
 				equals = p.searchCardToCreate((long)number);
 			}
 		}	
@@ -198,6 +198,10 @@ public class Bank {
 		} else {
 			throw new NothingToRedoException(p.getName());
 		}
+	}
+	
+	public void takeItOutNormal(Person p) {
+		
 	}
 
 	/**
@@ -452,7 +456,6 @@ public class Bank {
 	}
 
 	private Person[] orderByNameHeapSort(Person[] p, int[] keys) {
-		
 		Heap<Person> np = new Heap<Person>(0, 0);
 		np.setKeys(keys);
 		np.setElements(p);

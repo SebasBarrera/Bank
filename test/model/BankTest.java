@@ -39,12 +39,12 @@ class BankTest {
 	void orderByNameHeapSort0() throws AreadyAddedIdException {
 		setupStage();
 		bank.order(1);
-		/*System.out.println();
+		System.out.println();
 		System.out.println("SORTED BY NAME BY HEAP" + bank.toString());
-		System.out.println();*/
+		System.out.println();
 		for (int i = 0; i < bank.getPersons().size() - 1; i++) {
 			int j = i + 1;
-			assertTrue(bank.getPersons().get(j).getName().compareTo(bank.getPersons().get(i).getName()) >= 0);
+			assertTrue(bank.getPersons().get(j).getName().compareTo(bank.getPersons().get(i).getName()) <= 0);
 		}
 	}
 	
@@ -65,9 +65,9 @@ class BankTest {
 	void orderByTimeQuickSort() throws AreadyAddedIdException {
 		setupStage();
 		bank.order(3);
-		/*System.out.println();
+		System.out.println();
 		System.out.println("SORTED BY TIME BY QUICK" + bank.toString());
-		System.out.println();*/
+		System.out.println();
 		for (int i = 0; i < bank.getPersons().size() - 1; i++) {
 			int j = i + 1;
 			assertTrue(bank.getPersons().get(j).getIngress().compareTo(bank.getPersons().get(i).getIngress()) >= 0);
@@ -78,9 +78,9 @@ class BankTest {
 	void orderByAmountBubuleSort() throws AreadyAddedIdException {
 		setupStage();
 		bank.order(4);
-		/*System.out.println();
+		System.out.println();
 		System.out.println("SORTED BY AMOUNT BY BUBLE" + bank.toString());
-		System.out.println();*/
+		System.out.println();
 		for (int i = 0; i < bank.getPersons().size() - 1; i++) {
 			int j = i + 1;
 			assertTrue(bank.getPersons().get(j).compareByAmount(bank.getPersons().get(i)) >= 0);
