@@ -23,7 +23,7 @@ class BankTest {
 		
 		Calendar c2 = Calendar.getInstance();
 		c2.set(2021, Calendar.JUNE, 22);
-		bank.addPerson("Jhon Arboleda    ", 64236302, null, c2, 18, true, Person.MALE, false);
+		bank.addPerson("Jhon Arboleda    ", 64236302, null, c2, 65, true, Person.MALE, false);
 		bank.addCard(bank.getPersons().get(1), 18, 2.0, 6, 5000.0, 20000.0);
 		bank.addCard(bank.getPersons().get(1), 15, 1.2, 12, 50000.0, 200000.0);
 		
@@ -39,12 +39,12 @@ class BankTest {
 	void orderByNameHeapSort0() throws AreadyAddedIdException {
 		setupStage();
 		bank.order(1);
-		System.out.println();
+		/*System.out.println();
 		System.out.println("SORTED BY NAME BY HEAP" + bank.toString());
-		System.out.println();
+		System.out.println();*/
 		for (int i = 0; i < bank.getPersons().size() - 1; i++) {
 			int j = i + 1;
-			assertTrue(bank.getPersons().get(j).getName().compareTo(bank.getPersons().get(i).getName()) <= 0);
+			assertTrue(bank.getPersons().get(j).getName().compareTo(bank.getPersons().get(i).getName()) >= 0);
 		}
 	}
 	
@@ -65,9 +65,9 @@ class BankTest {
 	void orderByTimeQuickSort() throws AreadyAddedIdException {
 		setupStage();
 		bank.order(3);
-		System.out.println();
+		/*System.out.println();
 		System.out.println("SORTED BY TIME BY QUICK" + bank.toString());
-		System.out.println();
+		System.out.println();*/
 		for (int i = 0; i < bank.getPersons().size() - 1; i++) {
 			int j = i + 1;
 			assertTrue(bank.getPersons().get(j).getIngress().compareTo(bank.getPersons().get(i).getIngress()) >= 0);
@@ -78,9 +78,9 @@ class BankTest {
 	void orderByAmountBubuleSort() throws AreadyAddedIdException {
 		setupStage();
 		bank.order(4);
-		System.out.println();
+		/*System.out.println();
 		System.out.println("SORTED BY AMOUNT BY BUBLE" + bank.toString());
-		System.out.println();
+		System.out.println();*/
 		for (int i = 0; i < bank.getPersons().size() - 1; i++) {
 			int j = i + 1;
 			assertTrue(bank.getPersons().get(j).compareByAmount(bank.getPersons().get(i)) >= 0);
@@ -92,6 +92,7 @@ class BankTest {
 		setupStage();
 		bank.addPersonToRow(11441050, "Sebastián Barrera");
 		bank.addPersonToRow(64236302, "Jhon Arboleda    ");
+//		assertTrue(bank.getPriorityRow().getElements()[0].getName().equals("Jhon Arboleda    "));
 	}
 	
 }
