@@ -84,8 +84,6 @@ public class BankGUI {
     @FXML
     private RadioButton femaleAdd;
     @FXML
-    private BorderPane tablePane;
-    @FXML
     private Label clientsNameLbl;
     @FXML
     private TextField withdrawValue;
@@ -123,7 +121,6 @@ public class BankGUI {
 			attending = control.getNextInPriotityRow();
 			control.extractInPriorityQ();
 			row2.getItems().remove(attending.getName());
-			clientsNameLbl.setText(attending.getName());
 			showInfoScreen();
 		} catch (HeapUnderFlowException e) {
 			e.printStackTrace();
@@ -351,6 +348,7 @@ public class BankGUI {
 			succes.setHeaderText("User added successfully");
 			succes.showAndWait();
 			
+			attendScreen.setDisable(false);
 			extraStage.close();
 		} catch (NumberFormatException e) {
 			Alert error = new Alert(AlertType.ERROR);
