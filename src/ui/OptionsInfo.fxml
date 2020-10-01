@@ -29,7 +29,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="117.0" layoutY="276.0" mnemonicParsing="false" text="Card payment">
+      <Button layoutX="117.0" layoutY="276.0" mnemonicParsing="false" onAction="#paymentOptions" text="Card payment">
          <font>
             <Font size="14.0" />
          </font>
@@ -55,7 +55,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="369.0" layoutY="200.0" mnemonicParsing="false" text="Add Card">
+      <Button layoutX="369.0" layoutY="200.0" mnemonicParsing="false" onAction="#addCardOption" text="Add Card">
          <font>
             <Font size="14.0" />
          </font>

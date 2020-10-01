@@ -1,14 +1,17 @@
 package ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import customExceptions.ActionsOnInactiveException;
 import customExceptions.AlreadyInactiveException;
+import customExceptions.AlreadyPaidException;
 import customExceptions.AreadyAddedIdException;
 import customExceptions.HeapUnderFlowException;
 import customExceptions.NormalRowIsEmptyException;
 import customExceptions.NotEnoughtMoneyException;
+import customExceptions.NotFoundCardException;
 import customExceptions.NothingToRedoException;
 import customExceptions.NothingToUndoException;
 import customExceptions.PriorityRowIsEmptyException;
@@ -35,8 +38,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Controller;
 import model.Person;
@@ -91,6 +92,26 @@ public class BankGUI {
     private TextField depositValue;
     @FXML
     private TextField why;
+    @FXML
+    private TextField cardNumber;
+    @FXML
+    private RadioButton entireDebt;
+    @FXML
+    private RadioButton quota;
+    @FXML
+    private RadioButton savingAccount;
+    @FXML
+    private RadioButton cash;
+    @FXML
+    private TextField debtField;
+    @FXML
+    private TextField quotasField;
+    @FXML
+    private TextField fitField;
+    @FXML
+    private TextField feeField;
+    @FXML
+    private TextField paymentField;
 	
 	public BankGUI() {
 		try {
@@ -205,22 +226,40 @@ public class BankGUI {
 			money.showAndWait();
 		} catch (AlreadyInactiveException e) {
 			
+		} catch (NumberFormatException e) {
+			Alert error = new Alert(AlertType.ERROR);
+			error.setTitle("Error");
+			error.setHeaderText("Make sure that in field are no characters but numbers or it stay empty");
+			error.showAndWait();
 		}
 	}
 	
 	@FXML
 	void depositAction(ActionEvent event) {
 		try {
-			int value = Integer.parseInt(withdrawValue.getText());
+			int value = Integer.parseInt(depositValue.getText());
 			control.deposit(attending, value);
+			Alert succes = new Alert(AlertType.INFORMATION);
+			succes.setTitle("Successfully");
+			succes.setHeaderText("Deposit made successfully");
+			succes.showAndWait();
+			extraStage.close();
+			extraStage.close();
 		} catch (ActionsOnInactiveException e) {
 			Alert money = new Alert(AlertType.ERROR);
 			money.setTitle("Inactive account");
 			money.setHeaderText("This account is inactive");
 			money.setContentText("Please active it and try again");
 			money.showAndWait();
+			extraStage.close();
 		} catch (AlreadyInactiveException e) {
 			
+		} catch (NumberFormatException e) {
+			Alert error = new Alert(AlertType.ERROR);
+			error.setTitle("Error");
+			error.setHeaderText("Make sure that in field are no characters but numbers or it stay empty");
+			error.showAndWait();
+			extraStage.close();
 		}
 	}
 	
@@ -388,6 +427,95 @@ public class BankGUI {
 		idColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("id"));
 		timeColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("dateOfIngress"));
 		amountColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("totalDebt"));
+	}
+	
+	@FXML
+	void paymentOptions(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentScreen.fxml"));
+		fxmlLoader.setController(this);
+		Parent payment = fxmlLoader.load();
+		
+		Scene scene = new Scene(payment);
+		Stage stage = new Stage();
+		stage.setScene(scene);
+		stage.setTitle("Payment Form");
+		extraStage = stage;
+		stage.show();
+	}
+	
+	@FXML
+	void paymentAction(ActionEvent event) {
+		try {
+			int cardNumberI = Integer.parseInt(cardNumber.getText());
+			boolean all = entireDebt.isSelected();
+			boolean accType = savingAccount.isSelected();
+			control.cardPayment(attending, cardNumberI, all, accType);
+			
+			Alert success = new Alert(AlertType.INFORMATION);
+			success.setTitle("Successfully");
+			success.setHeaderText("Payment done succesfully");
+			success.showAndWait();
+			extraStage.close();
+		} catch (NotFoundCardException e) {
+			Alert error = new Alert(AlertType.ERROR);
+			error.setTitle("Error");
+			error.setHeaderText("Card with number "+ cardNumber.getText() + " was not found in your account." );
+			error.showAndWait();
+		} catch (AlreadyPaidException e) {
+			Alert error = new Alert(AlertType.ERROR);
+			error.setTitle("Error");
+			error.setHeaderText("This card is already paid");
+			error.showAndWait();
+		} catch (AlreadyInactiveException e) {
+			
+		} catch (NotEnoughtMoneyException e) {
+			Alert error = new Alert(AlertType.ERROR);
+			error.setTitle("Error");
+			error.setHeaderText("Ur saving card have not enough money");
+			error.showAndWait();
+		} catch (ActionsOnInactiveException e) {
+			Alert money = new Alert(AlertType.ERROR);
+			money.setTitle("Inactive account");
+			money.setHeaderText("This account is inactive");
+			money.setContentText("Please active it and try again");
+			money.showAndWait();
+		} catch (NumberFormatException e) {
+			Alert error = new Alert(AlertType.ERROR);
+			error.setTitle("Error");
+			error.setHeaderText("Make sure that in field are no characters but numbers or it stay empty");
+			error.showAndWait();
+		}
+	}
+	
+	@FXML
+	void addCardOption(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddCardScreen.fxml"));
+		fxmlLoader.setController(this);
+		Parent card = fxmlLoader.load();	
+		
+		Scene scene = new Scene(card);
+		Stage stage = new Stage();
+		stage.setScene(scene);
+		stage.setTitle("Add card form");
+		extraStage = stage;
+		stage.show();
+	}
+	
+	@FXML
+	void addCardAction(ActionEvent event) {
+		try {
+			double debt = Double.parseDouble(debtField.getText());
+			double fit = Double.parseDouble(fitField.getText());
+			int quotas = Integer.parseInt(quotasField.getText());
+			int fees = Integer.parseInt(feeField.getText());
+			int paymentDay = Integer.parseInt(paymentField.getText());
+			control.addCard(attending, debt, fit, quotas, fees, paymentDay);
+		} catch (NumberFormatException e) {
+			Alert error = new Alert(AlertType.ERROR);
+			error.setTitle("Error");
+			error.setHeaderText("Make sure that in field are no characters but numbers or it stay empty");
+			error.showAndWait();
+		}
 	}
 	
 	@FXML
