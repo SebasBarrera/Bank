@@ -308,7 +308,7 @@ public class Bank {
 		this.redo = redo;
 	}
 	
-	public Person AttendNormalRow() throws NormalRowIsEmptyException {
+	public Person getNextInNormalRow() throws NormalRowIsEmptyException {
 		Person p = null;
 		if (!normalRow.isEmpty()) {
 			p = normalRow.peek();
@@ -318,7 +318,7 @@ public class Bank {
 		return p;
 	}
 
-	public Person AttendPriorityRow() throws HeapUnderFlowException, PriorityRowIsEmptyException {
+	public Person getNextInPriorityRow() throws HeapUnderFlowException, PriorityRowIsEmptyException {
 		Person p = null;
 		if (priorityRow.getArraysize() != 0) {
 			p = priorityRow.extractMaxheap();
@@ -465,6 +465,12 @@ public class Bank {
 		return persons + "";
 	}
 	
+	public void extractInPriorityQ() throws HeapUnderFlowException {
+		priorityRow.extractMaxheap();
+	}
 	
+	public void peekInNormalQ() {
+		normalRow.peek();
+	}
 	
 }

@@ -49,78 +49,40 @@ public class Controller {
 		control.addPersonToRow(id, name);
 	}
 	
-	public void AttendARow() throws UserIsNotRegiterException, ActionsOnInactiveException, NotEnoughtMoneyException, AlreadyInactiveException, AlreadyActiveException, NotFoundCardException, AlreadyPaidException, NothingToUndoException, NothingToRedoException, NormalRowIsEmptyException, HeapUnderFlowException, PriorityRowIsEmptyException {
-		boolean cual; // decide en cual de las dos colas se atendera la siguiente persona
-		int priority = sc.nextInt();
-		if (priority == 1) {
-			cual = true;
-		} else {
-			cual = false;
-		}
-		Person p;
-		if (cual) {
-			p = control.AttendPriorityRow();
-		} else {
-			p = control.AttendNormalRow();
-		}
-		String what = sc.nextLine(); // que accion querra hacer
-		boolean getOut = false;
-		int value;
-		while (!getOut) {
-			switch (what) {
-				case "consignment":
-					value = sc.nextInt();sc.nextLine(); // cuanto consignara
-					control.consignment(p, value);
-				break;
-				case "withdrawals":
-					value = sc.nextInt();sc.nextLine(); // cuanto retirara
-					control.withdrawals(p, value);
-				break;
-				case "cancelAccount":
-					control.cancelAccount(p);
-					@SuppressWarnings("unused") String motivo = ""; // razon por la cual cancela la cuenta
-					@SuppressWarnings("unused") Calendar hoy = Calendar.getInstance(); //fecha en la que se retira
-				break;
-				case "payCard":
-					long number = sc.nextLong();sc.nextLine(); // numero de la tarjeta que pagara
-					int comoPagara = sc.nextInt(); sc.nextLine(); // aqui se decide si el usuario pagara toda la deuda de la tarjeta, 
-																	//o solo la siguiente cuota
-					int cuentaDeAhorros = sc.nextInt(); sc.nextLine();  //indica si pagara en efectivo o con la cuenta de ahorros;
-					boolean total; // true si paga toda la tarjeta, false si paga una cuota
-					boolean cuentaAhorros; // true si paga con cuenta de ahorros, false si en efectivo
-					if (comoPagara == 1) {
-						total = true;
-					} else {
-						total = false;
-					}
-					if (cuentaDeAhorros == 1) {
-						cuentaAhorros = true;
-					} else {
-						cuentaAhorros = false;
-					}
-					control.payCard(p, number, total, cuentaAhorros);;
-				break;
-				case "addCard":
-					double owe = sc.nextDouble();sc.nextLine(); // de cuanto sera la deuda de la tarjeta
-					double cardSpace = sc.nextDouble(); sc.nextLine(); // cupo de la tarjeta
-					int quotas = sc.nextInt();sc.nextLine(); // nº de cuotas
-					// LA TASA ES UN NUMERO ENTRE 1.4452 Y 2.0798,
-					int fees = sc.nextInt();sc.nextLine(); // interes periodico  mensual vencido
-					// SIENDO LA TASA MAS COMUN 1.8715, PODRIAMOS MANEJARLO CON OPCIONES QUE TOMA LA CAJERA
-					int paymentDay =sc.nextInt(); sc.nextLine(); //dia de pago del mes
-					control.addCard(p, paymentDay, fees, quotas, owe, cardSpace);		
-				break;
-				case "undo":
-					control.undo(p);
-				break;
-				case "redo":
-					control.redo(p);
-				break;
-				case "getOut":
-					getOut = true;
-				break;
-			}
-		}
+	public void deposit(Person p, int value) throws ActionsOnInactiveException, AlreadyInactiveException {
+		control.consignment(p, value);
+	}
+	
+	public void withdraw(Person p, int value) throws NotEnoughtMoneyException, ActionsOnInactiveException, AlreadyInactiveException {
+		control.withdrawals(p, value);
+	}
+	
+	public void cancelAcc(Person p, String why) throws AlreadyInactiveException {
+		control.cancelAccount(p);
+	}
+	
+	public void cardPayment(Person p, long cardNumber, boolean all, boolean accType) throws NotFoundCardException, AlreadyPaidException, AlreadyInactiveException, NotEnoughtMoneyException, ActionsOnInactiveException {
+		control.payCard(p, cardNumber, all, accType);
+	}
+	
+	public void addCard(Person p, double debt, double fit, int quotas, int fees, int paymentDay) {
+		control.addCard(p, paymentDay, fees, quotas, debt, fit);
+	}
+	
+	public Person getNextInPriotityRow() throws HeapUnderFlowException, PriorityRowIsEmptyException {
+		return control.getNextInPriorityRow();
+	}
+	
+	public Person getNextInNormalRow() throws NormalRowIsEmptyException {
+		return control.getNextInNormalRow();
+	}
+	
+	public void undo(Person p) throws NothingToUndoException {
+		control.undo(p);
+	}
+	
+	public void redo(Person p) throws NothingToRedoException {
+		control.redo(p);
 	}
 	
 	public void addPerson(String name, int id, int age, boolean disabled, int gender, boolean pregnated) throws AreadyAddedIdException {
@@ -139,5 +101,13 @@ public class Controller {
 	
 	public List<Person> getPersons() {
 		return control.getPersonList();
+	}
+	
+	public void extractInPriorityQ() throws HeapUnderFlowException {
+		control.extractInPriorityQ();
+	}
+	
+	public void peekInNormalQ() {
+		control.peekInNormalQ();
 	}
 }

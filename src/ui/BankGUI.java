@@ -3,7 +3,15 @@ package ui;
 import java.io.IOException;
 import java.util.Optional;
 
+import customExceptions.ActionsOnInactiveException;
+import customExceptions.AlreadyInactiveException;
 import customExceptions.AreadyAddedIdException;
+import customExceptions.HeapUnderFlowException;
+import customExceptions.NormalRowIsEmptyException;
+import customExceptions.NotEnoughtMoneyException;
+import customExceptions.NothingToRedoException;
+import customExceptions.NothingToUndoException;
+import customExceptions.PriorityRowIsEmptyException;
 import customExceptions.SmallerKeyException;
 import customExceptions.UserIsNotRegiterException;
 import javafx.collections.FXCollections;
@@ -26,7 +34,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Controller;
 import model.Person;
@@ -34,6 +44,9 @@ import model.Person;
 public class BankGUI {
 	private Controller control;
 	private Stage extraStage;
+	private Person attending;
+	@FXML
+	private AnchorPane attendScreen;
 	@FXML
 	private Label clientOptionsInfo;
 	@FXML
@@ -72,6 +85,14 @@ public class BankGUI {
     private RadioButton femaleAdd;
     @FXML
     private BorderPane tablePane;
+    @FXML
+    private Label clientsNameLbl;
+    @FXML
+    private TextField withdrawValue;
+    @FXML
+    private TextField depositValue;
+    @FXML
+    private TextField why;
 	
 	public BankGUI() {
 		try {
@@ -79,13 +100,39 @@ public class BankGUI {
 		} catch (AreadyAddedIdException e) {
 			e.getMessage();
 		}
-		initialize();
-		
 	}
 	
 	@FXML
 	void attendClient(MouseEvent event) throws IOException {
-		showInfoScreen();
+		try {
+			attending = control.getNextInNormalRow();
+			control.peekInNormalQ();
+			row1.getItems().remove(attending.getName());
+			showInfoScreen();
+		} catch (NormalRowIsEmptyException e) {
+			Alert accCanceled = new Alert(AlertType.INFORMATION);
+			accCanceled.setTitle("Row empty");
+			accCanceled.setHeaderText("There is no more clients waiting in the row");
+			accCanceled.showAndWait();
+		}
+	}
+	
+	@FXML
+	void attendClientPriority(MouseEvent event) throws IOException {
+		try {
+			attending = control.getNextInPriotityRow();
+			control.extractInPriorityQ();
+			row2.getItems().remove(attending.getName());
+			clientsNameLbl.setText(attending.getName());
+			showInfoScreen();
+		} catch (HeapUnderFlowException e) {
+			e.printStackTrace();
+		} catch (PriorityRowIsEmptyException e) {
+			Alert accCanceled = new Alert(AlertType.INFORMATION);
+			accCanceled.setTitle("Row empty");
+			accCanceled.setHeaderText("There is no more clients waiting in the row");
+			accCanceled.showAndWait();
+		}				
 	}
 	
 	void showInfoScreen() throws IOException {
@@ -99,26 +146,27 @@ public class BankGUI {
 		stage.setTitle("Update client");
 		extraStage = stage;
 		stage.show();
+		clientsNameLbl.setText(attending.getName());
 	}
 	
-	@FXML
-	void accountIsBeingCanceledAlert(ActionEvent event) {
+	void accountIsBeingCanceledAlert() {
 		Alert cancelAcc = new Alert(AlertType.CONFIRMATION);
 		cancelAcc.setTitle("U are trying to cancel an account");
 		cancelAcc.setHeaderText("ARE U SURE U WANT TO CANCEL THIS ACCOUNT?");
 		
 		Optional<ButtonType> result = cancelAcc.showAndWait();
 		if(result.get() == ButtonType.OK) {
-		     //TODO hay que cancelar la cuenta
-			Alert accCanceled = new Alert(AlertType.INFORMATION);
+	    	Alert accCanceled = new Alert(AlertType.INFORMATION);
 			accCanceled.setTitle("Account canceled");
 			accCanceled.setHeaderText("The choosen account has been canceled");
 			accCanceled.showAndWait();
+			extraStage.close();
 		}else {
 			Alert accCanceled = new Alert(AlertType.INFORMATION);
 			accCanceled.setTitle("Account was not canceled");
 			accCanceled.setHeaderText("The choosen account has not been canceled");
 			accCanceled.showAndWait();
+			extraStage.close();
 		}
 	}
 	
@@ -139,6 +187,72 @@ public class BankGUI {
 		stage.setTitle("Amount to withdraw");
 		extraStage = stage;
 		stage.show();
+	}
+	
+	@FXML
+	void withdrawAction(ActionEvent event) {
+		try {
+			int value = Integer.parseInt(withdrawValue.getText());
+			control.withdraw(attending, value);
+		} catch (NotEnoughtMoneyException e) {
+			Alert money = new Alert(AlertType.INFORMATION);
+			money.setTitle("Not enough money");
+			money.setHeaderText("U have not enough money in ur account");
+			money.setContentText("Please type a lesser amount and try again");
+			money.showAndWait();
+		} catch (ActionsOnInactiveException e) {
+			Alert money = new Alert(AlertType.ERROR);
+			money.setTitle("Inactive account");
+			money.setHeaderText("This account is inactive");
+			money.setContentText("Please active it and try again");
+			money.showAndWait();
+		} catch (AlreadyInactiveException e) {
+			
+		}
+	}
+	
+	@FXML
+	void depositAction(ActionEvent event) {
+		try {
+			int value = Integer.parseInt(withdrawValue.getText());
+			control.deposit(attending, value);
+		} catch (ActionsOnInactiveException e) {
+			Alert money = new Alert(AlertType.ERROR);
+			money.setTitle("Inactive account");
+			money.setHeaderText("This account is inactive");
+			money.setContentText("Please active it and try again");
+			money.showAndWait();
+		} catch (AlreadyInactiveException e) {
+			
+		}
+	}
+	
+	@FXML
+	void cancelAccOption(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CancelAccScreen.fxml"));
+		fxmlLoader.setController(this);
+		Parent cancel = fxmlLoader.load();
+    	
+		Scene scene = new Scene(cancel);
+		Stage stage = new Stage();
+		stage.setScene(scene);
+		stage.setTitle("Cancel Account");
+		extraStage = stage;
+		stage.show();
+	}
+	
+	@FXML
+	void cancelAction(ActionEvent event) {
+	    try {
+	    	String whyS = why.getText();
+		    control.cancelAcc(attending, whyS);
+		    accountIsBeingCanceledAlert();
+		} catch (AlreadyInactiveException e) {
+			Alert accCanceled = new Alert(AlertType.INFORMATION);
+			accCanceled.setTitle("Account was not canceled");
+			accCanceled.setHeaderText("The choosen account is already cancelled");
+			accCanceled.showAndWait();
+		}
 	}
 	
 	@FXML
@@ -175,6 +289,7 @@ public class BankGUI {
 			addAcc.setTitle("User is not register");
 			addAcc.setHeaderText("User is not register");
 			addAcc.setContentText("Push accept button to add him or close this window to cancel.");
+			attendScreen.setDisable(true);
 			
 			Optional<ButtonType> result = addAcc.showAndWait();
 			if(result.get() == ButtonType.OK) {
@@ -187,7 +302,12 @@ public class BankGUI {
 				stage.setTitle("Form to add");
 				extraStage = stage;
 				stage.show();
+				stage.setOnCloseRequest(ev ->{
+					attendScreen.setDisable(false);
+				});
 				addPregnant.setDisable(true);
+			}else {
+				attendScreen.setDisable(false);
 			}
 			
 		} catch (NumberFormatException e) {
@@ -200,7 +320,7 @@ public class BankGUI {
 	}
 	
 	@FXML
-	void addUser(ActionEvent event) throws AreadyAddedIdException {
+	void addUser(ActionEvent event) {
 		try {
 			String name = addName.getText();
 			String idS = addId.getText();
@@ -237,6 +357,11 @@ public class BankGUI {
 			error.setTitle("Error");
 			error.setHeaderText("Make sure that in \"Citizenship id\" and \"Age\" fields are no characters but numbers");
 			error.showAndWait();
+		} catch (AreadyAddedIdException e) {
+			Alert dontAdd = new Alert(AlertType.ERROR);
+			dontAdd.setTitle("Error");
+			dontAdd.setHeaderText("User with that Id is already added");
+			dontAdd.showAndWait();
 		}
 	}
 	
@@ -263,11 +388,31 @@ public class BankGUI {
 		usersTable.setItems(observableList);
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
 		idColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("id"));
-		timeColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("ingress"));
+		timeColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("dateOfIngress"));
 		amountColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("totalDebt"));
 	}
 	
-	private void initialize() {
-		
+	@FXML
+	void undo(ActionEvent event) {
+		try {
+			control.undo(attending);
+		} catch (NothingToUndoException e) {
+			Alert noUndo = new Alert(AlertType.ERROR);
+			noUndo.setTitle("Error");
+			noUndo.setHeaderText("There is no actions done yet");
+			noUndo.showAndWait();
+		}
+	}
+	
+	@FXML
+	void redo(ActionEvent event) {
+		try {
+			control.redo(attending);
+		} catch (NothingToRedoException e) {
+			Alert noRedo = new Alert(AlertType.ERROR);
+			noRedo.setTitle("Error");
+			noRedo.setHeaderText("There is no actions undone yet");
+			noRedo.showAndWait();
+		}
 	}
 }
