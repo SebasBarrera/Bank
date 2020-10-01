@@ -225,7 +225,7 @@ class HeapTest {
 
 	
 	@Test
-	void testPriorityInsert0() throws SmallerKeyException {//dont work
+	void testPriorityInsert0() throws SmallerKeyException {//doesn't work
 		setupStage0();
 		heap.priorityInsert(4, 2);
 		Integer[] elements = {4};

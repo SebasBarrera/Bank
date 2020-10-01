@@ -103,7 +103,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 	
 	@Override
 	public int parent(int i) {
-		return (int) Math.floor(i/2) -1;
+		return i/2;
 	}	
 
 	/**
@@ -164,6 +164,7 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 		}else {
 			max = elements[0];
 			elements[0] = elements[heapSize-1];
+			heapSize--;
 			int counter = 1;
 			maxHeapify(0, counter);
 		}
@@ -240,7 +241,6 @@ public class Heap<E extends Comparable<E>> implements IHeap<E>, IPriorQueue<E> {
 		}
 		setElements(tmpE, heapSize);
 		setKeys(tmpKeys);
-		arraysize = newArraySize;
 	}
 
 	private void setElements(E[] tmpE, int heapSize2) {
