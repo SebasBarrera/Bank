@@ -1,14 +1,9 @@
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.Calendar;
-
 import org.junit.jupiter.api.Test;
-
 import customExceptions.AreadyAddedIdException;
-import customExceptions.SmallerKeyException;
-import customExceptions.UserIsNotRegiterException;
 
 class BankTest {
 
@@ -36,7 +31,7 @@ class BankTest {
 	}
 	
 	@Test
-	void orderByNameHeapSort0() throws AreadyAddedIdException {
+	void orderByNameHeapSort() throws AreadyAddedIdException {
 		setupStage();
 		bank.order(1);
 		/*System.out.println();
@@ -86,13 +81,6 @@ class BankTest {
 			assertTrue(bank.getPersons().get(j).compareByAmount(bank.getPersons().get(i)) >= 0);
 		}
 	}
-	
-	@Test
-	void addToQueues() throws AreadyAddedIdException, SmallerKeyException, UserIsNotRegiterException {
-		setupStage();
-		bank.addPersonToRow(11441050, "Sebastián Barrera");
-		bank.addPersonToRow(64236302, "Jhon Arboleda    ");
-//		assertTrue(bank.getPriorityRow().getElements()[0].getName().equals("Jhon Arboleda    "));
-	}
+
 	
 }

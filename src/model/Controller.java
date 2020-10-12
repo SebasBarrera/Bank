@@ -2,9 +2,7 @@ package model;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Scanner;
 import customExceptions.ActionsOnInactiveException;
-import customExceptions.AlreadyActiveException;
 import customExceptions.AlreadyInactiveException;
 import customExceptions.AlreadyPaidException;
 import customExceptions.AreadyAddedIdException;
@@ -21,10 +19,8 @@ import customExceptions.UserIsNotRegiterException;
 public class Controller {
 		
 	private Bank control;
-	private Scanner sc;
 	
 	public Controller() throws AreadyAddedIdException {
-		sc = new Scanner(System.in);
 		
 		control = new Bank();
 		Calendar c1 = Calendar.getInstance();
