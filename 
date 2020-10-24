@@ -1,0 +1,172 @@
+[33mcommit 986e5a585b0bcb24acbe8f44df1d9ccd47047e09[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Sebastián <sebasbarrera981119@gmail.com>
+Date:   Sun Oct 18 23:19:28 2020 -0500
+
+    improve of the adt
+
+[33mcommit c1b4c355d1073e497d56750fa3edd3a152a6319d[m
+Author: Jonh Stiven <stiven2201@gmail.com>
+Date:   Wed Oct 14 17:57:38 2020 -0500
+
+    improvement to documentation
+
+[33mcommit 5be5a87b034f46b56468cb2788020bbcacd3ee56[m
+Author: Sebastián <sebasbarrera981119@gmail.com>
+Date:   Sun Oct 11 21:17:41 2020 -0500
+
+    class diagram
+
+[33mcommit 1f1c83f0276e708f4aba929b78a6510d86013e7c[m
+Author: Sebastián <sebasbarrera981119@gmail.com>
+Date:   Fri Oct 9 13:06:07 2020 -0500
+
+    psp0
+
+[33mcommit 0339772854a9a1a7a7689a8e94da2254a9709e12[m
+Author: Alejandro Garcia <alejo.gar.122@gmail.com>
+Date:   Wed Sep 30 23:49:38 2020 -0500
+
+    John Stiven's psp0 added
+
+[33mcommit 09f041db3a1cc067dc752333837d357cd4f44dc5[m
+Author: Alejandro Garcia <alejo.gar.122@gmail.com>
+Date:   Wed Sep 30 22:41:51 2020 -0500
+
+    psp folder added
+
+[33mcommit 08e88fc48224f967d66abbc94198eaff9efad007[m
+Author: Alejandro Garcia <alejo.gar.122@gmail.com>
+Date:   Wed Sep 30 21:56:35 2020 -0500
+
+    finally, gui done
+
+[33mcommit 1a1ce81fa0c498f3f89b5f7b635aacb8135b8f46[m
+Merge: 3937e07 67a1385
+Author: Alejandro Garcia <alejo.gar.122@gmail.com>
+Date:   Wed Sep 30 19:37:37 2020 -0500
+
+    Merge branch 'master' of https://github.com/SebasBarrera/Bank
+
+[33mcommit 3937e07e08b98d4de593a1aec60da1d559c8c511[m
+Author: Alejandro Garcia <alejo.gar.122@gmail.com>
+Date:   Wed Sep 30 19:37:23 2020 -0500
+
+    pane disabled bug fixed
+
+[33mcommit 67a1385f4849881013c09903c56fd40dcec2b5d4[m
+Merge: d76794a d18bab1
+Author: Sebastián <sebasbarrera981119@gmail.com>
+Date:   Wed Sep 30 19:29:15 2020 -0500
+
+    new some features
+
+[33mcommit d76794a828a27bb35d9d1322f942d983b223c5e1[m
+Author: Sebastián <sebasbarrera981119@gmail.com>
+Date:   Wed Sep 30 19:28:22 2020 -0500
+
+    new some features
+
+[33mcommit d18bab1953250a964abb2cdfd54ffdd55093b792[m
+Merge: 401305f cc4c379
+Author: Alejandro Garcia <alejo.gar.122@gmail.com>
+Date:   Wed Sep 30 19:24:06 2020 -0500
+
+    Merge branch 'master' of https://github.com/SebasBarrera/Bank
+
+[33mcommit 401305f9fd363eb25d7ff351be2f8a1f73dacaf8[m
+Author: Alejandro Garcia <alejo.gar.122@gmail.com>
+Date:   Wed Sep 30 19:23:55 2020 -0500
+
+    some actions of options to update done
+
+[33mcommit cc4c3797b0134ce9ce4150148c5eaf5ae0c9ad59[m
+Author: Sebastián <sebasbarrera981119@gmail.com>
+Date:   Wed Sep 30 18:27:04 2020 -0500
+
+    fixed a bug that double the heapSize
+
+[33mcommit 7f7415f6e447a545d74115928af27d429619208c[m
+Author: Sebastián <sebasbarrera981119@gmail.com>
+Date:   Wed Sep 30 17:24:41 2020 -0500
+
+    an other null pointer fixed
+
+[33mcommit 2e7ad51b5988f5cd214750d53336ba00f8fea901[m
+Author: Sebastián <sebasbarrera981119@gmail.com>
+Date:   Wed Sep 30 16:40:25 2020 -0500
+
+    null pointer fixed
+
+[33mcommit 279a6a64d7e703eb9c9549a7c9f2aecd9e85afd3[m
+Author: Sebastián <sebasbarrera981119@gmail.com>
+Date:   Wed Sep 30 16:21:14 2020 -0500
+
+    now, the date of ingress is a String
+
+[33mcommit b216b718fc0e165acea1df56b448f5d645822647[m
+Author: Alejandro Garcia <alejo.gar.122@gmail.com>
+Date:   Wed Sep 30 16:17:25 2020 -0500
+
+    now the table view can be seen
+
+[33mcommit 3c679fcc743811f4a265a17033079f74a3b5d684[m
+Author: Alejandro Garcia <alejo.gar.122@gmail.com>
+Date:   Wed Sep 30 14:14:51 2020 -0500
+
+    gui almost ready, conect with functions left
+
+[33mcommit 87baeb7ffaee4bd079fe67ea06a0b623bf9c7e1d[m
+Author: Alejandro Garcia <alejo.gar.122@gmail.com>
+Date:   Wed Sep 30 10:03:34 2020 -0500
+
+    ADTs almost readys, only Heap's ADT left
+
+[33mcommit 9fd0c8b35b43ca032d379ed4ca0f15a2b8218dc2[m
+Author: Jonh Stiven <stiven2201@gmail.com>
+Date:   Wed Sep 30 01:06:29 2020 -0500
+
+    update documentation
+
+[33mcommit ba1ccaf938b72a96441bf705c199d1044d7ff491[m
+Author: Jonh Stiven <stiven2201@gmail.com>
+Date:   Wed Sep 30 00:59:34 2020 -0500
+
+    documentation update2
+
+[33mcommit 7ea2ab04c474bae7111be41a59f83f93a465732f[m
+Merge: c17ce28 3fc46b4
+Author: Jonh Stiven <stiven2201@gmail.com>
+Date:   Wed Sep 30 00:49:59 2020 -0500
+
+    Merge branch 'master' of https://github.com/SebasBarrera/Bank
+
+[33mcommit c17ce287cc0933275696a77b4e88ec6b2dd35181[m
+Author: Jonh Stiven <stiven2201@gmail.com>
+Date:   Wed Sep 30 00:49:53 2020 -0500
+
+    documentation update
+
+[33mcommit 3fc46b4f0907a884ca88ec050fad376df488f8a2[m
+Author: Sebastián <sebasbarrera981119@gmail.com>
+Date:   Tue Sep 29 23:31:57 2020 -0500
+
+    Almost all is working
+
+[33mcommit cc2213ee7845013c05ad116874237cf4df4c4b58[m
+Merge: a0718ad 28a640e
+Author: Jonh Stiven <stiven2201@gmail.com>
+Date:   Tue Sep 29 16:11:28 2020 -0500
+
+    Merge branch 'master' of https://github.com/SebasBarrera/Bank
+
+[33mcommit 28a640e827608bc30880d4c483e4011d9a29e9b6[m
+Author: Sebastián <sebasbarrera981119@gmail.com>
+Date:   Tue Sep 29 14:06:55 2020 -0500
+
+    sorting algorithms are testing in the correct way
+
+[33mcommit 712943b7897c22c36693a0bb9d4dd781b6aed9d8[m
+Author: Alejandro Garcia <alejo.gar.122@gmail.com>
+Date:   Tue Sep 29 09:18:12 2020 -0500
+
+    added the resources folder with the undo and redo images
