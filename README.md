@@ -12,4 +12,4 @@ In our documentation it clearly specifies the structures used, the functional an
 
 ## Added
 
-Class diagram         
+Class diagram   https://github.com/SebasBarrera/Bank/blob/master/docs/diagrama.png      
