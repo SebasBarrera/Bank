@@ -431,7 +431,7 @@ public class Bank {
 		int k = lo;
 		while(i<=mid && j <= hi) {
 			if(a[i].compareById(a[j]) < 0) {
-				b[k] = a[i];
+				b[k] = a[i]; 
 				i++;
 			}else {
 				b[k] = a[j];

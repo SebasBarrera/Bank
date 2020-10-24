@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80f33869-02ea-4836-880a-a23541b5bfa0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/docs/Documentation.docx" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Documentation.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dataStructure/Heap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataStructure/Heap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Bank.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +28,7 @@
       <updated>1600922780668</updated>
       <workItem from="1600922782320" duration="3000" />
       <workItem from="1601437354312" duration="3000" />
+      <workItem from="1602993852193" duration="4000" />
     </task>
     <servers />
   </component>
